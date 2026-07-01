@@ -137,8 +137,14 @@
     box-shadow: var(--shadow-glass), inset 0 1px 0 0 var(--glass-highlight);
   }
   .glass-strong {
-    --glass-bg: rgba(16, 16, 18, 0.72);
-    --glass-blur: 28px;
+    --glass-bg: rgba(16, 16, 18, 0.8);
+    --glass-blur: 32px;
+  }
+  /* Near-opaque, heavy blur — for surfaces that must fully obscure what is
+     behind them (mobile menu tray, docked player): focus, no bleed-through. */
+  .glass-solid {
+    --glass-bg: rgba(10, 10, 11, 0.94);
+    --glass-blur: 34px;
   }
 
   /* Site-wide film grain — inline SVG turbulence, no image request */

@@ -40,9 +40,9 @@ export function MiniPlayer() {
           animate={{ y: 0, opacity: 1 }}
           exit={{ y: 80, opacity: 0 }}
           transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
-          className="fixed bottom-4 left-1/2 z-40 -translate-x-1/2"
+          className="fixed inset-x-3 bottom-3 z-40 lg:inset-x-auto lg:bottom-4 lg:left-1/2 lg:-translate-x-1/2"
         >
-          <div className="glass flex items-center gap-3 rounded-full py-2 pl-2 pr-3">
+          <div className="glass glass-strong flex items-center gap-3 rounded-2xl py-2 pl-2 pr-3 lg:rounded-full">
             <button
               type="button"
               onClick={onPlay}
@@ -67,7 +67,7 @@ export function MiniPlayer() {
               )}
             </button>
 
-            <div className="pr-1 text-xs leading-tight">
+            <div className="min-w-0 flex-1 pr-1 text-xs leading-tight lg:flex-none">
               <p className="font-medium text-primary">Featured track</p>
               <p className="text-faint">
                 {unavailable ? "Listen on Spotify" : playing ? "Now playing" : "Tap to play"}

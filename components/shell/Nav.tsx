@@ -41,10 +41,12 @@ export function Nav() {
 
   return (
     <>
-      <header className="fixed inset-x-0 top-0 z-50 px-4 pt-4 md:px-8 md:pt-5">
+      <header className="fixed inset-x-0 top-0 z-50 md:px-8 md:pt-5">
         <nav
           className={cn(
-            "mx-auto flex max-w-7xl items-center justify-between rounded-full px-5 py-3.5 transition-all duration-500 md:px-7 md:py-4",
+            "mx-auto flex max-w-7xl items-center justify-between rounded-none px-5 py-3.5 transition-all duration-500 md:rounded-full md:px-7 md:py-4",
+            // Full-width bar on mobile so its blur covers everything behind it;
+            // floating pill on desktop.
             scrolled ? "glass glass-strong" : "glass",
           )}
         >
@@ -117,7 +119,7 @@ export function Nav() {
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             transition={{ duration: 0.3 }}
-            className="glass fixed inset-0 z-40 flex flex-col justify-center gap-1 px-8 md:hidden"
+            className="glass glass-solid fixed inset-0 z-40 flex flex-col justify-center gap-1 px-8 md:hidden"
           >
             {footerNav.map((item, i) => (
               <motion.div

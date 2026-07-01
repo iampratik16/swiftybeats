@@ -5,7 +5,6 @@ import { SmartVideo } from "@/components/media/SmartVideo";
 import { MagneticButton } from "@/components/ui/MagneticButton";
 import { SplitText } from "@/components/ui/SplitText";
 import { VinylArtwork } from "@/components/home/VinylArtwork";
-import { useAudio } from "@/components/providers/AudioProvider";
 import { spotify, socials } from "@/lib/links";
 
 /**
@@ -14,9 +13,6 @@ import { spotify, socials } from "@/lib/links";
  * his release "Freedom", then the CTAs. Nothing plays with sound until pressed.
  */
 export function Hero({ hasVideo = false }: { hasVideo?: boolean }) {
-  const { status, toggle } = useAudio();
-  const playing = status === "playing";
-
   return (
     <section className="relative isolate flex min-h-[100svh] flex-col items-center justify-center overflow-hidden px-6 py-28 text-center">
       <div className="absolute inset-0 -z-10">
@@ -84,21 +80,14 @@ export function Hero({ hasVideo = false }: { hasVideo?: boolean }) {
         </MagneticButton>
         <MagneticButton
           variant="glass"
-          onClick={toggle}
-          cursorLabel={playing ? "pause" : "listen"}
-          ariaLabel={playing ? "Pause featured track" : "Play featured track"}
+          href={socials.spotify}
+          cursorLabel="listen"
+          ariaLabel="Listen on Spotify"
         >
           <span className="flex items-center gap-2">
-            {playing ? "Pause" : "Listen"}
+            Listen
             <svg viewBox="0 0 24 24" width="14" height="14" fill="currentColor" aria-hidden>
-              {playing ? (
-                <>
-                  <rect x="6" y="5" width="4" height="14" rx="1" />
-                  <rect x="14" y="5" width="4" height="14" rx="1" />
-                </>
-              ) : (
-                <path d="M8 5v14l11-7z" />
-              )}
+              <path d="M8 5v14l11-7z" />
             </svg>
           </span>
         </MagneticButton>

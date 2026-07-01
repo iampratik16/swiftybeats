@@ -16,15 +16,7 @@ import { cn } from "@/lib/utils";
  */
 export function Nav() {
   const pathname = usePathname();
-  const [scrolled, setScrolled] = useState(false);
   const [open, setOpen] = useState(false);
-
-  useEffect(() => {
-    const onScroll = () => setScrolled(window.scrollY > 24);
-    onScroll();
-    window.addEventListener("scroll", onScroll, { passive: true });
-    return () => window.removeEventListener("scroll", onScroll);
-  }, []);
 
   useEffect(() => setOpen(false), [pathname]);
   useEffect(() => {
@@ -44,10 +36,11 @@ export function Nav() {
       <header className="fixed inset-x-0 top-0 z-50 md:px-8 md:pt-5">
         <nav
           className={cn(
-            "mx-auto flex max-w-7xl items-center justify-between rounded-none px-5 py-3.5 transition-all duration-500 md:rounded-full md:px-7 md:py-4",
+            "mx-auto flex max-w-7xl items-center justify-between rounded-none px-5 py-3.5 md:rounded-full md:px-7 md:py-4",
             // Full-width bar on mobile so its blur covers everything behind it;
-            // floating pill on desktop.
-            scrolled ? "glass glass-strong" : "glass",
+            // floating pill on desktop. Always maximum frost so content behind
+            // the nav is fully blurred.
+            "glass glass-strong",
           )}
         >
           <Link href="/" aria-label="Swifty Beats, home" className="flex items-center">

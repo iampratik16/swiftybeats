@@ -1,26 +1,237 @@
 @import "tailwindcss";
 
+/* ------------------------------------------------------------------ *
+ * Swifty Beats design tokens (brief §3.3, §3.4)
+ * Declared once here; Tailwind v4 generates the matching utilities
+ * (bg-base, text-primary, text-gold, font-display, ease-out-expo, ...).
+ * ------------------------------------------------------------------ */
+@theme {
+  /* Dark neutral scale */
+  --color-base: #0a0a0b;
+  --color-raised: #141416;
+  --color-elevated: #1b1b1e;
+  /* Near-black for dark text on gold/light surfaces. Separate from `base` so
+     `text-base` stays the font-size utility (avoids the v4 size/colour clash). */
+  --color-ink: #0a0a0b;
+
+  /* Warm off-white type + muted greys */
+  --color-primary: #f4f2ec;
+  --color-muted: #9a968c;
+  --color-faint: #5a574f;
+
+  /* Signature gold + reactive accents (violet/teal live in the visualiser) */
+  --color-gold: #e6b45a;
+  --color-gold-bright: #f6ce7b;
+  --color-reactive: #6e56f6;
+  --color-reactive-2: #2bd9c6;
+  --color-danger: #e5484d;
+
+  /* Fonts — reference the next/font CSS variables, fall back gracefully */
+  --font-display: var(--font-clash), ui-sans-serif, system-ui, sans-serif;
+  --font-body: var(--font-satoshi), ui-sans-serif, system-ui, sans-serif;
+
+  /* Fluid editorial type scale */
+  --text-eyebrow: 0.8125rem;
+  --text-eyebrow--line-height: 1;
+  --text-eyebrow--letter-spacing: 0.22em;
+  --text-title: clamp(1.5rem, 1rem + 2.4vw, 2.75rem);
+  --text-title--line-height: 1.05;
+  --text-title--letter-spacing: -0.01em;
+  --text-display: clamp(2.25rem, 1rem + 5.4vw, 5rem);
+  --text-display--line-height: 0.96;
+  --text-display--letter-spacing: -0.02em;
+  --text-hero: clamp(3rem, 0.5rem + 10vw, 10rem);
+  --text-hero--line-height: 0.88;
+  --text-hero--letter-spacing: -0.035em;
+
+  /* Motion easings (calm, expensive) */
+  --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-out-quart: cubic-bezier(0.25, 1, 0.5, 1);
+  --ease-in-out-quint: cubic-bezier(0.83, 0, 0.17, 1);
+
+  --radius-glass: 1.5rem;
+}
+
+/* Non-utility custom properties (glass recipe + grain, read by CSS/JS) */
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --glass-bg: rgba(20, 20, 22, 0.55);
+  --glass-border: rgba(255, 255, 255, 0.08);
+  --glass-blur: 20px;
+  --glass-highlight: rgba(255, 255, 255, 0.06);
+  --shadow-glass: 0 24px 60px -20px rgba(0, 0, 0, 0.7);
 }
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
+/* ------------------------------------------------------------------ *
+ * Base layer
+ * ------------------------------------------------------------------ */
+@layer base {
+  html {
+    background: var(--color-base);
+    color-scheme: dark;
+    -webkit-tap-highlight-color: transparent;
+  }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+  /* Lenis owns scroll; keep native smooth off to avoid double-easing */
+  .lenis.lenis-smooth {
+    scroll-behavior: auto !important;
+  }
+  .lenis.lenis-stopped {
+    overflow: hidden;
+  }
+
+  body {
+    background: var(--color-base);
+    color: var(--color-primary);
+    font-family: var(--font-body);
+    font-synthesis-weight: none;
+    text-rendering: optimizeLegibility;
+    -webkit-font-smoothing: antialiased;
+    overflow-x: hidden;
+  }
+
+  ::selection {
+    background: var(--color-gold);
+    color: #0a0a0b;
+  }
+
+  :focus-visible {
+    outline: 2px solid var(--color-gold);
+    outline-offset: 3px;
+    border-radius: 2px;
+  }
+
+  /* Thin, dark, unobtrusive scrollbar */
+  ::-webkit-scrollbar {
+    width: 10px;
+    height: 10px;
+  }
+  ::-webkit-scrollbar-track {
+    background: var(--color-base);
+  }
+  ::-webkit-scrollbar-thumb {
+    background: var(--color-elevated);
+    border-radius: 999px;
+    border: 3px solid var(--color-base);
+  }
+  ::-webkit-scrollbar-thumb:hover {
+    background: #2a2a2e;
+  }
+
+  h1, h2, h3, h4 {
+    font-family: var(--font-display);
+    font-weight: 600;
+    text-wrap: balance;
   }
 }
 
-body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+/* ------------------------------------------------------------------ *
+ * Components: glass surfaces, atmosphere overlays, motion primitives
+ * ------------------------------------------------------------------ */
+@layer components {
+  /* Reusable frosted glass (brief §11) */
+  .glass {
+    background: var(--glass-bg);
+    border: 1px solid var(--glass-border);
+    backdrop-filter: blur(var(--glass-blur)) saturate(1.4);
+    -webkit-backdrop-filter: blur(var(--glass-blur)) saturate(1.4);
+    box-shadow: var(--shadow-glass), inset 0 1px 0 0 var(--glass-highlight);
+  }
+  .glass-strong {
+    --glass-bg: rgba(16, 16, 18, 0.72);
+    --glass-blur: 28px;
+  }
+
+  /* Site-wide film grain — inline SVG turbulence, no image request */
+  .fx-grain {
+    position: fixed;
+    inset: 0;
+    z-index: 60;
+    pointer-events: none;
+    opacity: 0.05;
+    mix-blend-mode: overlay;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='240' height='240'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+    background-size: 240px 240px;
+  }
+
+  /* Vignette to hold the moody club tone */
+  .fx-vignette {
+    position: fixed;
+    inset: 0;
+    z-index: 59;
+    pointer-events: none;
+    background: radial-gradient(
+      120% 90% at 50% 30%,
+      transparent 40%,
+      rgba(0, 0, 0, 0.55) 100%
+    );
+  }
+
+  /* Warm gold glow for the wordmark and key accents */
+  .glow-gold {
+    text-shadow: 0 0 32px rgba(230, 180, 90, 0.28);
+  }
+
+  /* Fade the edges of scrolling bands (marquee, etc.) */
+  .mask-x-fade {
+    -webkit-mask-image: linear-gradient(
+      to right,
+      transparent,
+      #000 8%,
+      #000 92%,
+      transparent
+    );
+    mask-image: linear-gradient(
+      to right,
+      transparent,
+      #000 8%,
+      #000 92%,
+      transparent
+    );
+  }
+
+  /* Hairline divider in the neutral scale */
+  .rule {
+    border-color: var(--glass-border);
+  }
+}
+
+/* ------------------------------------------------------------------ *
+ * Keyframes (used by marquee + subtle ambient motion)
+ * ------------------------------------------------------------------ */
+@keyframes marquee-x {
+  from { transform: translate3d(0, 0, 0); }
+  to { transform: translate3d(-50%, 0, 0); }
+}
+@keyframes slow-float {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-8px); }
+}
+@keyframes pulse-ring {
+  0% { transform: scale(0.9); opacity: 0.7; }
+  70% { transform: scale(1.6); opacity: 0; }
+  100% { opacity: 0; }
+}
+@keyframes record-spin {
+  to { transform: rotate(360deg); }
+}
+
+.animate-marquee {
+  animation: marquee-x var(--marquee-duration, 40s) linear infinite;
+}
+
+/* ------------------------------------------------------------------ *
+ * Reduced motion — kill all non-essential animation (brief §11 a11y)
+ * ------------------------------------------------------------------ */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+    scroll-behavior: auto !important;
+  }
+  .fx-grain {
+    display: none;
+  }
 }

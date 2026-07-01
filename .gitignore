@@ -24,6 +24,10 @@
 .DS_Store
 *.pem
 
+# QA / screenshots
+/.playwright-mcp/
+/home-hero*.jpeg
+
 # debug
 npm-debug.log*
 yarn-debug.log*

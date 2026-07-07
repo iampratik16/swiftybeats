@@ -4,6 +4,7 @@ import { SpotifyEmbed } from "@/components/media/SpotifyEmbed";
 import { SmartImage } from "@/components/media/SmartImage";
 import { Reveal } from "@/components/ui/Reveal";
 import { SplitText } from "@/components/ui/SplitText";
+import { BorderGlow } from "@/components/ui/BorderGlow";
 
 export function FeaturedRelease() {
   return (
@@ -45,11 +46,14 @@ export function FeaturedRelease() {
           </div>
         </div>
         <Reveal>
-          <SpotifyEmbed
-            type={spotify.featured.type}
-            id={spotify.featured.id}
-            title={`Swifty Beats — ${spotify.featured.title}`}
-          />
+          <BorderGlow alwaysOn borderRadius={20} glowRadius={30} backgroundColor="#141416">
+            <SpotifyEmbed
+              bare
+              type={spotify.featured.type}
+              id={spotify.featured.id}
+              title={`Swifty Beats — ${spotify.featured.title}`}
+            />
+          </BorderGlow>
         </Reveal>
       </div>
     </section>

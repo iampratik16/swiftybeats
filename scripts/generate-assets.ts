@@ -13,7 +13,7 @@ import sharp from "sharp";
 import { mkdirSync, writeFileSync, rmSync } from "node:fs";
 import { join } from "node:path";
 import { execFileSync } from "node:child_process";
-import { imagenAssets, veoHeroPrompt, type ImagenAsset } from "./asset-prompts";
+import { imagenAssets, veoHeroPrompt, veoNegativePrompt, type ImagenAsset } from "./asset-prompts";
 
 const PROJECT = process.env.GOOGLE_CLOUD_PROJECT || "radlabs-497004";
 const LOCATION = process.env.GOOGLE_CLOUD_LOCATION || "us-central1";
@@ -95,7 +95,7 @@ async function runVeo() {
       let op = await ai.models.generateVideos({
         model,
         prompt: veoHeroPrompt,
-        config: { numberOfVideos: 1, aspectRatio: "16:9" },
+        config: { numberOfVideos: 1, aspectRatio: "16:9", negativePrompt: veoNegativePrompt },
       });
       const started = Date.now();
       while (!op.done) {

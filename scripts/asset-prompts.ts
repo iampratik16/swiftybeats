@@ -14,13 +14,6 @@ export type ImagenAsset = {
 
 export const imagenAssets: ImagenAsset[] = [
   {
-    id: "texture-tabla",
-    kind: "texture",
-    aspectRatio: "16:9",
-    prompt:
-      "Extreme macro photograph of a tabla drum skin, deep shadow, single warm gold rim light, fine dust particles in the air, near-black background, cinematic, high detail, moody, premium, no text, no people.",
-  },
-  {
     id: "backdrop-gold-haze",
     kind: "backdrop",
     aspectRatio: "16:9",
@@ -86,6 +79,12 @@ export const imagenAssets: ImagenAsset[] = [
   },
 ];
 
-/** Veo hero loop (brief §9.2). Short, dark, seamless, no faces in focus. */
+/** Veo hero loop (brief §9.2). Client-supplied prompt. "Vertical" generated as
+    16:9 to fit the landscape hero. Person at a production setup, face never
+    shown, no drums/percussion. */
 export const veoHeroPrompt =
-  "Slow cinematic loop, dark club atmosphere, abstract close-ups: hands moving over DJ decks dissolving into a tabla being played, drifting gold particles and soft volumetric haze, deep blacks with warm gold and faint violet light, shallow depth of field, no faces in focus, premium, moody, seamless loop, no text.";
+  "Cinematic widescreen clip, dark and moody studio atmosphere. A person sits at a music production setup with a pad controller, keyboard and glowing screens, seen from behind and slightly to the side, hands working over the equipment. The face is never shown, kept out of frame and in shadow. Deep blacks with a warm gold key light and faint violet rim light, soft volumetric haze, shallow depth of field, subtle film grain. Slow, controlled camera push-in with a gentle handheld feel. Premium, atmospheric, understated. No on-screen text, no logos.";
+
+/** Veo negative prompt (client-supplied). */
+export const veoNegativePrompt =
+  "visible face, facial features, bright daylight, flat lighting, cartoon, low resolution, warped hands, extra fingers, text, watermark, jitter, oversaturated, dhol, tabla, drums, percussion instruments.";

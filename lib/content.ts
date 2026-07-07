@@ -22,19 +22,11 @@ export type TimelineEvent = z.infer<typeof TimelineEvent>;
 
 export const timeline = z.array(TimelineEvent).parse([
   {
-    id: "tabla",
-    marker: "06",
-    label: "Tabla",
-    title: "It starts on the tabla",
-    body: "At six, Swifty's hands find the tabla. Rhythm before melody, discipline before everything.",
-    image: "/assets/generated/texture-tabla.avif",
-  },
-  {
     id: "dhol",
-    marker: "07",
+    marker: "DHOL",
     label: "Dhol",
-    title: "The dhol answers",
-    body: "A year on, the dhol. Louder, heavier, built for the crowd. Two drums set a lifelong tension between the intimate and the enormous.",
+    title: "It starts on the dhol",
+    body: "Rhythm before melody, discipline before everything. Loud, heavy, built for the crowd, the drum sets a lifelong pull between the intimate and the enormous.",
     image: "/assets/generated/era-dhol.avif",
   },
   {
@@ -74,12 +66,13 @@ export const timeline = z.array(TimelineEvent).parse([
 /* ------------------------- Credentials marquee -------------------------- */
 // True credentials only — no invented festival names (brief §14).
 export const credentials = [
+  "Asian House",
   "Wireless",
   "Glastonbury",
   "BBC Radio",
   "5M+ Streams",
   "Pure Divine Sounds",
-  "Tabla & Dhol",
+  "Dhol & Percussion",
   "UK Tours",
   "Remixes & Bootlegs",
 ] as const;
@@ -136,3 +129,18 @@ export const featuredRelease = {
   title: "Freedom",
   body: "Out now on Spotify. Full-track listening, straight from the source. Press play and let it run.",
 } as const;
+
+/* -------------------------------- Shows --------------------------------- */
+// Live dates. Empty for now — the /shows page shows a "coming soon" hero while
+// this is empty and switches to a dated list automatically once entries land.
+// Add a show here and it appears with no redesign. Dates: ISO "YYYY-MM-DD".
+const Show = z.object({
+  id: z.string(),
+  date: z.string(),
+  venue: z.string(),
+  city: z.string(),
+  ticketUrl: z.url().optional(),
+});
+export type Show = z.infer<typeof Show>;
+
+export const shows = z.array(Show).parse([]);

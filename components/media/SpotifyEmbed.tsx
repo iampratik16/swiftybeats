@@ -14,12 +14,15 @@ export function SpotifyEmbed({
   id,
   title,
   compact = false,
+  bare = false,
   className,
 }: {
   type: "track" | "album" | "artist" | "playlist";
   id: string;
   title: string;
   compact?: boolean;
+  /** Drop the glass frame — for nesting inside another framed container (BorderGlow) */
+  bare?: boolean;
   className?: string;
 }) {
   const ref = useRef<HTMLDivElement>(null);
@@ -43,7 +46,14 @@ export function SpotifyEmbed({
   }, []);
 
   return (
-    <div ref={ref} className={cn("glass overflow-hidden rounded-2xl p-1.5", className)}>
+    <div
+      ref={ref}
+      className={cn(
+        "overflow-hidden rounded-2xl p-1.5",
+        bare ? "rounded-[inherit]" : "glass",
+        className,
+      )}
+    >
       {load ? (
         <iframe
           src={spotify.embed(type, id)}

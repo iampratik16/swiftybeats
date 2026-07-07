@@ -11,13 +11,19 @@ export const site = {
   name: "Swifty Beats",
   domain: "swiftybeats.com",
   url: "https://swiftybeats.com",
-  tagline: "Tabla to techno. UK DJ, producer and multi-instrumentalist.",
+  tagline: "Asian House producer and DJ. South Asian percussion meets electronic.",
+} as const;
+
+/** Management. Every enquiry (booking, press, general) routes here. */
+export const management = {
+  name: "Supreme Music Group",
+  email: "info@suprememusic.group",
 } as const;
 
 export const contact = {
-  // TODO(client): confirm real inboxes before launch
-  bookings: "bookings@swiftybeats.com",
-  press: "press@swiftybeats.com",
+  bookings: management.email,
+  press: management.email,
+  general: management.email,
 } as const;
 
 export const socials = {

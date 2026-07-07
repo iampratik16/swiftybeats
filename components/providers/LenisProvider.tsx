@@ -34,8 +34,9 @@ export function LenisProvider({ children }: { children: React.ReactNode }) {
     if (reduced) return;
 
     lenis = new Lenis({
-      duration: 1.1,
-      easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
+      // lerp (frame-rate-independent catch-up) feels immediate yet smooth —
+      // snappier than a fixed 1.1s duration, and correct on 120Hz displays.
+      lerp: 0.1,
       autoRaf: false,
       wheelMultiplier: 1,
     });

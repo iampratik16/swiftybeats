@@ -2,6 +2,7 @@ import { contact } from "@/lib/links";
 import { MagneticButton } from "@/components/ui/MagneticButton";
 import { SplitText } from "@/components/ui/SplitText";
 import { SmartImage } from "@/components/media/SmartImage";
+import { BorderGlow } from "@/components/ui/BorderGlow";
 
 const stats = [
   ["5M+", "Streams"],
@@ -16,7 +17,8 @@ const stats = [
 export function BookingBand() {
   return (
     <section className="px-6 py-24 md:py-32">
-      <div className="relative mx-auto grid max-w-6xl overflow-hidden rounded-[2rem] glass glass-strong lg:grid-cols-2">
+      <BorderGlow alwaysOn borderRadius={32} glowRadius={30} backgroundColor="#0f0f11" className="mx-auto max-w-6xl">
+      <div className="relative grid overflow-hidden rounded-[2rem] lg:grid-cols-2">
         <div className="relative min-h-[260px] lg:min-h-full">
           <SmartImage
             src="/assets/generated/era-festival.avif"
@@ -59,6 +61,7 @@ export function BookingBand() {
           </dl>
         </div>
       </div>
+      </BorderGlow>
     </section>
   );
 }

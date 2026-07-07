@@ -22,10 +22,10 @@ export function OriginStory() {
         <div>
           <p className="text-eyebrow uppercase text-gold">Origin</p>
           <h2 className="mt-5 max-w-2xl text-display font-semibold">
-            <SplitText text="From the tabla to the main stage." immediate />
+            <SplitText text="From the dhol to the main stage." immediate />
           </h2>
         </div>
-        <span className="hidden shrink-0 text-sm text-faint md:block">Age 6 — now</span>
+        <span className="hidden shrink-0 text-sm text-faint md:block">Age 7 — now</span>
       </header>
 
       <div className="grid gap-10 lg:grid-cols-[1.15fr_0.85fr] lg:gap-16">
@@ -73,7 +73,7 @@ export function OriginStory() {
 
         {/* Sticky image panel (desktop) — crossfades on hover */}
         <div className="hidden lg:block">
-          <div className="sticky top-28 aspect-[4/5] overflow-hidden rounded-2xl glass">
+          <div className="sticky top-28 aspect-[4/5] overflow-hidden rounded-2xl tile-surface">
             <AnimatePresence mode="wait">
               <motion.div
                 key={current.id}

@@ -12,19 +12,20 @@ import { MiniPlayer } from "@/components/shell/MiniPlayer";
 export const metadata: Metadata = {
   metadataBase: new URL(site.url),
   title: {
-    default: "Swifty Beats · UK DJ, Producer and Multi-instrumentalist",
+    default: "Swifty Beats · Asian House Producer and DJ",
     template: "%s · Swifty Beats",
   },
   description:
-    "The official site of Swifty Beats, a UK DJ, producer and multi-instrumentalist fusing tabla and dhol heritage with contemporary electronic production. Book for clubs, festivals and brand events.",
+    "The official site of Swifty Beats, an Asian House producer and DJ from the UK. South Asian percussion and dhol heritage fused with house and electronic production. Book for clubs, festivals and brand events.",
   keywords: [
     "Swifty Beats",
+    "Asian House",
+    "Asian House producer",
+    "Asian House DJ",
     "UK DJ",
-    "music producer",
-    "tabla",
+    "house music",
     "dhol",
     "South Asian electronic",
-    "festival DJ",
     "DJ booking",
   ],
   alternates: { canonical: "/" },
@@ -33,15 +34,15 @@ export const metadata: Metadata = {
     locale: "en_GB",
     url: site.url,
     siteName: site.name,
-    title: "Swifty Beats · UK DJ, Producer and Multi-instrumentalist",
+    title: "Swifty Beats · Asian House Producer and DJ",
     description:
-      "Tabla to techno. South Asian percussion heritage fused with contemporary electronic production.",
+      "Asian House. South Asian percussion heritage fused with house and electronic production.",
     images: [{ url: "/assets/generated/og.jpg", width: 1200, height: 630, alt: "Swifty Beats" }],
   },
   twitter: {
     card: "summary_large_image",
-    title: "Swifty Beats",
-    description: "Tabla to techno. UK DJ, producer and multi-instrumentalist.",
+    title: "Swifty Beats · Asian House Producer",
+    description: "Asian House. South Asian percussion meets electronic production.",
     images: ["/assets/generated/og.jpg"],
   },
   robots: { index: true, follow: true },
@@ -57,9 +58,9 @@ const personJsonLd = {
   "@type": "MusicGroup",
   name: site.name,
   url: site.url,
-  genre: ["Electronic", "Bass", "South Asian fusion"],
+  genre: ["Asian House", "House", "Electronic", "South Asian fusion"],
   description:
-    "UK DJ, producer and multi-instrumentalist fusing tabla and dhol heritage with contemporary electronic production.",
+    "Asian House producer and DJ from the UK, fusing dhol and South Asian percussion heritage with house and electronic production.",
   sameAs: [socials.spotify, socials.soundcloud, socials.youtube, socials.instagram, socials.tiktok],
 };
 

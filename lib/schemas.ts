@@ -12,6 +12,17 @@ export const newsletterSchema = z.object({
 });
 export type NewsletterInput = z.infer<typeof newsletterSchema>;
 
+/** General contact / management enquiry (routes to Supreme Music Group). */
+export const contactSchema = z.object({
+  name: z.string().min(2, "Please enter your name"),
+  email: z.email({ message: "Enter a valid email address" }),
+  subject: z.string().max(120).optional().or(z.literal("")),
+  message: z.string().min(10, "A sentence or two helps"),
+  // Honeypot
+  website: z.string().max(0).optional(),
+});
+export type ContactInput = z.infer<typeof contactSchema>;
+
 export const eventTypes = [
   "club",
   "festival",

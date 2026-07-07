@@ -1,138 +1,93 @@
 import Link from "next/link";
 import { footerNav } from "@/lib/nav";
-import { contact, site, socials } from "@/lib/links";
+import { management, site, socials } from "@/lib/links";
 import { socialIcons } from "@/components/brand/SocialIcons";
 import { NewsletterForm } from "./NewsletterForm";
 import { MagneticButton } from "@/components/ui/MagneticButton";
 import { Logo } from "@/components/brand/Logo";
-import { SplitText } from "@/components/ui/SplitText";
-import { SmartVideo } from "@/components/media/SmartVideo";
 
-const socialRow = [
-  ["spotify", "Spotify"],
-  ["soundcloud", "SoundCloud"],
-  ["youtube", "YouTube"],
-  ["instagram", "Instagram"],
-  ["tiktok", "TikTok"],
-] as const;
+const socialRow = ["spotify", "soundcloud", "youtube", "instagram", "tiktok"] as const;
 
+/**
+ * Minimal, premium footer. A single compact CTA + newsletter row over a thin
+ * bottom bar (logo, links, social icons, copyright). No video backdrop and no
+ * oversized wordmark — cleaner, lighter, and one fewer decode layer on the page.
+ */
 export function Footer() {
   const year = new Date().getFullYear();
   return (
-    <footer className="relative isolate overflow-hidden border-t border-white/5 bg-base">
-      {/* Ambient video backdrop */}
-      <div className="absolute inset-0 -z-10 opacity-[0.16]">
-        <SmartVideo
-          sources={[
-            { src: "/assets/hero/hero-loop.webm", type: "video/webm" },
-            { src: "/assets/hero/hero-loop.mp4", type: "video/mp4" },
-          ]}
-          poster="/assets/hero/hero-poster.jpg"
-          alt=""
-          className="h-full w-full"
-        />
-      </div>
-      <div className="absolute inset-0 -z-10 bg-gradient-to-b from-base/70 via-base/85 to-base" />
-
-      <div className="mx-auto max-w-7xl px-6 pb-10 pt-24 md:px-8 md:pt-28">
+    <footer className="cv-section relative border-t border-white/10 bg-base">
+      <div className="mx-auto max-w-7xl px-6 py-16 md:px-8">
         {/* CTA + newsletter */}
-        <div className="grid gap-12 border-b border-white/10 pb-16 lg:grid-cols-2 lg:items-end">
+        <div className="grid gap-10 border-b border-white/10 pb-12 lg:grid-cols-2 lg:items-end">
           <div>
-            <p className="text-eyebrow uppercase text-gold">Bookings open</p>
-            <h2 className="mt-4 max-w-md text-display font-semibold">
-              <SplitText text="Let's make it loud." immediate />
+            <p className="text-eyebrow uppercase text-gold">Asian House · Bookings open</p>
+            <h2 className="mt-3 max-w-md font-display text-title font-semibold">
+              Let&apos;s make it loud.
             </h2>
-            <div className="mt-7 flex flex-wrap items-center gap-4">
-              <MagneticButton href="/booking" cursorLabel="book">
-                Book Swifty
+            <div className="mt-6 flex flex-wrap items-center gap-4">
+              <MagneticButton href="/contact" cursorLabel="contact">
+                Get in touch
               </MagneticButton>
               <a
-                href={`mailto:${contact.bookings}`}
+                href={`mailto:${management.email}`}
                 data-cursor="email"
                 className="text-sm text-muted transition-colors hover:text-primary"
               >
-                {contact.bookings}
+                {management.email}
               </a>
             </div>
           </div>
           <div className="lg:justify-self-end lg:text-right">
             <p className="text-eyebrow uppercase text-faint">Newsletter</p>
-            <p className="mt-3 text-sm text-muted">New music, dates and drops. No noise.</p>
+            <p className="mt-2 text-sm text-muted">New music, dates and drops. No noise.</p>
             <NewsletterForm className="mt-4 max-w-md lg:ml-auto" />
           </div>
         </div>
 
-        {/* Link columns + social pills */}
-        <div className="mt-14 grid grid-cols-2 gap-10 md:grid-cols-4">
-          <nav aria-label="Footer">
-            <p className="text-eyebrow uppercase text-faint">Explore</p>
-            <ul className="mt-5 space-y-2.5">
-              {footerNav.map((item) => (
-                <li key={item.href}>
-                  <Link
-                    href={item.href}
-                    className="text-sm text-muted transition-colors hover:text-primary"
-                  >
-                    {item.label}
-                  </Link>
-                </li>
-              ))}
-            </ul>
+        {/* Bottom bar */}
+        <div className="mt-10 flex flex-col gap-8 md:flex-row md:items-center md:justify-between">
+          <Logo className="h-6" sizes="120px" />
+
+          <nav aria-label="Footer" className="flex flex-wrap gap-x-6 gap-y-2">
+            {footerNav.map((item) => (
+              <Link
+                key={item.href}
+                href={item.href}
+                className="text-sm text-muted transition-colors hover:text-primary"
+              >
+                {item.label}
+              </Link>
+            ))}
           </nav>
 
-          <div className="col-span-2">
-            <p className="text-eyebrow uppercase text-faint">Listen and follow</p>
-            <ul className="mt-5 grid grid-cols-2 gap-3 sm:grid-cols-3">
-              {socialRow.map(([key, label]) => {
-                const Icon = socialIcons[key];
-                return (
-                  <li key={key}>
-                    <a
-                      href={socials[key]}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      data-cursor="visit"
-                      className="group flex items-center gap-3 rounded-full glass px-4 py-2.5 transition-colors hover:border-white/20"
-                    >
-                      <Icon className="h-4 w-4 text-muted transition-colors group-hover:text-gold" />
-                      <span className="text-sm text-muted transition-colors group-hover:text-primary">
-                        {label}
-                      </span>
-                    </a>
-                  </li>
-                );
-              })}
-            </ul>
-          </div>
-
-          <div>
-            <p className="text-eyebrow uppercase text-faint">Contact</p>
-            <ul className="mt-5 space-y-2.5 text-sm text-muted">
-              <li>
-                <a href={`mailto:${contact.bookings}`} className="transition-colors hover:text-primary">
-                  Bookings
-                </a>
-              </li>
-              <li>
-                <a href={`mailto:${contact.press}`} className="transition-colors hover:text-primary">
-                  Press and media
-                </a>
-              </li>
-            </ul>
-          </div>
+          <ul className="flex items-center gap-4">
+            {socialRow.map((key) => {
+              const Icon = socialIcons[key];
+              return (
+                <li key={key}>
+                  <a
+                    href={socials[key]}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    aria-label={key}
+                    data-cursor="visit"
+                    className="text-muted transition-colors hover:text-gold"
+                  >
+                    <Icon className="h-[18px] w-[18px]" />
+                  </a>
+                </li>
+              );
+            })}
+          </ul>
         </div>
-      </div>
 
-      {/* Brand logo */}
-      <div className="flex justify-center px-6 pb-6 pt-4">
-        <Logo glow className="h-auto w-[min(86%,560px)]" sizes="560px" />
-      </div>
-
-      <div className="mx-auto flex max-w-7xl flex-col items-center justify-between gap-3 px-6 pb-10 pt-6 text-xs text-faint md:flex-row md:px-8">
-        <p>
-          © {year} {site.name}. All rights reserved.
-        </p>
-        <p>{site.tagline}</p>
+        <div className="mt-8 flex flex-col gap-1 text-xs text-faint md:flex-row md:items-center md:justify-between">
+          <p>
+            © {year} {site.name}. Management: {management.name}.
+          </p>
+          <p>{site.tagline}</p>
+        </div>
       </div>
     </footer>
   );

@@ -20,6 +20,36 @@ You can start editing the page by modifying `app/page.tsx`. The page auto-update
 
 This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
 
+## Environment
+
+Copy these into `.env.local` (all optional — the site runs and degrades
+gracefully without them).
+
+```bash
+# --- Email delivery (Contact + Newsletter forms) ---
+# Without these, forms still validate and accept; they just don't send email.
+RESEND_API_KEY=
+MAIL_FROM="Swifty Beats <noreply@swiftybeats.com>"
+MAIL_TO=info@suprememusic.group
+
+# --- Instagram gallery (Meta Graph API) ---
+# /gallery syncs posts + reels from Instagram (revalidates hourly). Without
+# these it falls back to curated tiles.
+#   1. Instagram must be a Business/Creator account linked to a Facebook Page.
+#   2. Create a Meta app (developers.facebook.com) with the Instagram Graph API.
+#   3. Generate a long-lived token (instagram_basic + pages_show_list).
+#   4. IG_USER_ID = the Instagram Business Account ID (Graph API Explorer).
+IG_GRAPH_TOKEN=
+IG_USER_ID=
+# Optional — set only if you use Instagram Login instead of the Facebook host:
+# IG_GRAPH_BASE=https://graph.instagram.com
+
+# --- Vertex AI asset generation (npm run generate:assets [-- --veo]) ---
+# Auth via Application Default Credentials: gcloud auth application-default login
+GOOGLE_CLOUD_PROJECT=radlabs-497004
+GOOGLE_CLOUD_LOCATION=us-central1
+```
+
 ## Learn More
 
 To learn more about Next.js, take a look at the following resources:

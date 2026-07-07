@@ -11,7 +11,14 @@ const nextConfig: NextConfig = {
       { protocol: "https", hostname: "i.ytimg.com" },
       { protocol: "https", hostname: "img.youtube.com" },
       { protocol: "https", hostname: "i.scdn.co" },
+      // Instagram media (Graph API gallery) is served from the Meta CDNs
+      { protocol: "https", hostname: "**.cdninstagram.com" },
+      { protocol: "https", hostname: "**.fbcdn.net" },
     ],
+  },
+  async redirects() {
+    // "Tour" is now "Shows" — keep old links and bookmarks working
+    return [{ source: "/tour", destination: "/shows", permanent: true }];
   },
   async headers() {
     return [

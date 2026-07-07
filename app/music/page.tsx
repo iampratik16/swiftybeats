@@ -7,6 +7,7 @@ import { YouTubeFacade } from "@/components/media/YouTubeFacade";
 import { socialIcons } from "@/components/brand/SocialIcons";
 import { SplitText } from "@/components/ui/SplitText";
 import { Reveal } from "@/components/ui/Reveal";
+import { BorderGlow } from "@/components/ui/BorderGlow";
 
 export const metadata: Metadata = {
   title: "Music",
@@ -41,7 +42,7 @@ export default function MusicPage() {
                 data-cursor="listen"
                 className="group block"
               >
-                <div className="relative aspect-square overflow-hidden rounded-xl glass">
+                <div className="relative aspect-square overflow-hidden rounded-xl tile-surface">
                   <SmartImage
                     src={release.cover}
                     alt={`${release.title} cover`}
@@ -70,7 +71,9 @@ export default function MusicPage() {
         <div>
           <h2 className="text-eyebrow uppercase text-faint">On Spotify</h2>
           <div className="mt-6">
-            <SpotifyEmbed type="artist" id={spotify.artistId} title="Swifty Beats on Spotify" />
+            <BorderGlow alwaysOn borderRadius={20} glowRadius={28} backgroundColor="#141416">
+              <SpotifyEmbed bare type="artist" id={spotify.artistId} title="Swifty Beats on Spotify" />
+            </BorderGlow>
           </div>
         </div>
         <div>
@@ -94,15 +97,19 @@ export default function MusicPage() {
                 target="_blank"
                 rel="noopener noreferrer"
                 data-cursor="visit"
-                className="group flex items-center gap-4 rounded-2xl glass p-5 transition-colors hover:border-white/20"
+                className="group block"
               >
-                {Icon ? (
-                  <Icon className="h-7 w-7 text-primary transition-colors group-hover:text-gold" />
-                ) : null}
-                <div>
-                  <p className="font-medium text-primary">{platform.name}</p>
-                  <p className="text-sm text-muted">{platform.role}</p>
-                </div>
+                <BorderGlow alwaysOn borderRadius={18} glowRadius={18} backgroundColor="#141416" className="h-full">
+                  <div className="flex items-center gap-4 p-5">
+                    {Icon ? (
+                      <Icon className="h-7 w-7 text-primary transition-colors group-hover:text-gold" />
+                    ) : null}
+                    <div>
+                      <p className="font-medium text-primary">{platform.name}</p>
+                      <p className="text-sm text-muted">{platform.role}</p>
+                    </div>
+                  </div>
+                </BorderGlow>
               </a>
             );
           })}

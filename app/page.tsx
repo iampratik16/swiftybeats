@@ -8,8 +8,8 @@ import { Marquee } from "@/components/home/Marquee";
 import { BookingBand } from "@/components/home/BookingBand";
 
 export default function HomePage() {
-  // Include the Veo loop behind the hero only if generation produced it.
-  const hasVideo = existsSync(join(process.cwd(), "public/assets/hero/hero-loop.mp4"));
+  // Include the hero loop only if the asset exists (Veo Asian-House atmosphere).
+  const hasVideo = existsSync(join(process.cwd(), "public/assets/hero/hero-loop-v5.mp4"));
 
   return (
     <>

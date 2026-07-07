@@ -4,6 +4,7 @@ import { socialIcons } from "@/components/brand/SocialIcons";
 import { SpotifyEmbed } from "@/components/media/SpotifyEmbed";
 import { Reveal } from "@/components/ui/Reveal";
 import { SplitText } from "@/components/ui/SplitText";
+import { BorderGlow } from "@/components/ui/BorderGlow";
 
 function ArrowUpRight() {
   return (
@@ -40,21 +41,24 @@ export function MusicStrip() {
                 target="_blank"
                 rel="noopener noreferrer"
                 data-cursor="visit"
-                className="group relative flex h-56 flex-col justify-between overflow-hidden rounded-3xl glass p-7 transition-all duration-500 hover:-translate-y-1 hover:border-white/20"
+                className="group block h-56 transition-transform duration-500 hover:-translate-y-1"
               >
-                <span className="pointer-events-none absolute inset-0 opacity-0 transition-opacity duration-500 group-hover:opacity-100 [background:radial-gradient(60%_60%_at_50%_0%,rgba(230,180,90,0.12),transparent)]" />
-                <div className="relative flex items-center justify-between">
-                  {Icon ? (
-                    <Icon className="h-8 w-8 text-primary transition-colors duration-500 group-hover:text-gold" />
-                  ) : null}
-                  <span className="text-faint transition-colors duration-500 group-hover:text-gold">
-                    <ArrowUpRight />
-                  </span>
-                </div>
-                <div className="relative">
-                  <h3 className="text-title font-medium">{platform.name}</h3>
-                  <p className="mt-1 text-sm text-muted">{platform.role}</p>
-                </div>
+                <BorderGlow alwaysOn borderRadius={24} glowRadius={24} backgroundColor="#141416" className="h-full">
+                  <div className="flex h-full flex-col justify-between p-7">
+                    <div className="flex items-center justify-between">
+                      {Icon ? (
+                        <Icon className="h-8 w-8 text-primary transition-colors duration-500 group-hover:text-gold" />
+                      ) : null}
+                      <span className="text-faint transition-colors duration-500 group-hover:text-gold">
+                        <ArrowUpRight />
+                      </span>
+                    </div>
+                    <div>
+                      <h3 className="text-title font-medium">{platform.name}</h3>
+                      <p className="mt-1 text-sm text-muted">{platform.role}</p>
+                    </div>
+                  </div>
+                </BorderGlow>
               </a>
             </Reveal>
           );
@@ -63,7 +67,9 @@ export function MusicStrip() {
 
       {/* His Spotify — top tracks, straight from the source */}
       <Reveal className="mt-6" delay={0.1}>
-        <SpotifyEmbed type="artist" id={spotify.artistId} title="Swifty Beats on Spotify" />
+        <BorderGlow alwaysOn borderRadius={20} glowRadius={28} backgroundColor="#141416">
+          <SpotifyEmbed bare type="artist" id={spotify.artistId} title="Swifty Beats on Spotify" />
+        </BorderGlow>
       </Reveal>
     </section>
   );

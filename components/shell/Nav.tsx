@@ -4,7 +4,7 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
-import { primaryNav, footerNav } from "@/lib/nav";
+import { primaryNav } from "@/lib/nav";
 import { Logo } from "@/components/brand/Logo";
 import { MagneticButton } from "@/components/ui/MagneticButton";
 import { cn } from "@/lib/utils";
@@ -44,7 +44,7 @@ export function Nav() {
           )}
         >
           <Link href="/" aria-label="Swifty Beats, home" className="flex items-center">
-            <Logo className="h-9 md:h-10" priority sizes="180px" />
+            <Logo className="h-6 md:h-7" priority sizes="140px" />
           </Link>
 
           <div className="hidden items-center gap-9 md:flex">
@@ -114,7 +114,7 @@ export function Nav() {
             transition={{ duration: 0.3 }}
             className="glass glass-solid fixed inset-0 z-40 flex flex-col justify-center gap-1 px-8 md:hidden"
           >
-            {footerNav.map((item, i) => (
+            {primaryNav.map((item, i) => (
               <motion.div
                 key={item.href}
                 initial={{ opacity: 0, x: -16 }}

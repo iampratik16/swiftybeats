@@ -8,8 +8,14 @@ const KEY = "sb_preloaded";
 
 /**
  * Preloader (brief §6.1): wordmark + gold progress line, curtain-wipes up to
- * reveal the site. Shown once per session, kept under ~1.5s, no auto-sound.
- * Locks scroll via body overflow (reliable regardless of Lenis init timing).
+ * reveal the site. Shown once per session, no auto-sound. Locks scroll via body
+ * overflow (reliable regardless of Lenis init timing).
+ *
+ * This is a real gate, not a fixed timer: the curtain holds until fonts are
+ * ready AND the page has fully loaded (`window` load) — so the site is never
+ * revealed mid-blank-paint — but is capped at `maxWait` so a slow third-party
+ * embed can never trap the visitor behind it. Progress creeps while waiting and
+ * snaps to 100 the moment resources are ready (past a short minimum on-screen).
  */
 export function Preloader() {
   const reduced = useReducedMotion();
@@ -22,22 +28,41 @@ export function Preloader() {
       return;
     }
     document.body.style.overflow = "hidden";
-    const total = reduced ? 350 : 1100;
+
     const start = performance.now();
+    const maxWait = reduced ? 400 : 2600;
+    const minShow = reduced ? 150 : 550;
+    let readyAt = 0;
     let raf = 0;
+
     const tick = (t: number) => {
-      const p = Math.min(1, (t - start) / total);
+      const elapsed = t - start;
+      const p = readyAt && elapsed >= minShow ? 1 : Math.min(0.92, elapsed / maxWait);
       setProgress(p);
-      if (p < 1) {
-        raf = requestAnimationFrame(tick);
-      } else {
+      if (p >= 1) {
         sessionStorage.setItem(KEY, "1");
         window.setTimeout(() => setDone(true), reduced ? 0 : 380);
+        return;
       }
+      raf = requestAnimationFrame(tick);
     };
     raf = requestAnimationFrame(tick);
+
+    // Ready = fonts loaded + full window load; whichever is slower, capped.
+    const markReady = () => {
+      if (!readyAt) readyAt = performance.now();
+    };
+    const fonts = document.fonts?.ready ?? Promise.resolve();
+    const loaded =
+      document.readyState === "complete"
+        ? Promise.resolve()
+        : new Promise<void>((r) => window.addEventListener("load", () => r(), { once: true }));
+    Promise.all([fonts, loaded]).then(markReady);
+    const cap = window.setTimeout(markReady, maxWait);
+
     return () => {
       cancelAnimationFrame(raf);
+      window.clearTimeout(cap);
       document.body.style.overflow = "";
     };
   }, [reduced]);
@@ -56,13 +81,11 @@ export function Preloader() {
           transition={{ duration: reduced ? 0.2 : 0.9, ease: [0.83, 0, 0.17, 1] }}
           aria-hidden
         >
-          <motion.div
-            initial={{ opacity: 0, y: 10 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
-          >
-            <Logo glow priority className="h-16 md:h-20" sizes="320px" />
-          </motion.div>
+          {/* Plain wrapper (no opacity gate): the wordmark is the loader itself,
+              so it must paint immediately — never wait on JS hydration. */}
+          <div>
+            <Logo glow className="h-16 md:h-20" />
+          </div>
           <div className="mt-8 h-px w-56 overflow-hidden bg-white/10">
             <motion.div
               className="h-full origin-left bg-gold"

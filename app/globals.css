@@ -272,6 +272,11 @@
 @keyframes record-spin {
   to { transform: rotate(360deg); }
 }
+/* Indeterminate loader bar (Instagram gallery skeleton). */
+@keyframes loaderslide {
+  0% { transform: translateX(-120%); }
+  100% { transform: translateX(240%); }
+}
 /* Heading word reveal — CSS-driven so it plays at first paint, never waiting on
    JS hydration. Opacity ONLY (no transform) so the word spans can stay `inline`:
    inline elements never clip overflowing glyph ink, so descenders (g/y/p) render

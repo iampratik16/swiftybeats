@@ -1,7 +1,6 @@
 "use client";
 
 import { useState } from "react";
-import { AnimatePresence, motion } from "framer-motion";
 import { timeline } from "@/lib/content";
 import { SmartImage } from "@/components/media/SmartImage";
 import { SplitText } from "@/components/ui/SplitText";
@@ -80,33 +79,35 @@ export function OriginStory() {
           })}
         </ol>
 
-        {/* Sticky image panel (desktop) — crossfades on hover */}
+        {/* Sticky image panel (desktop). Every era's image is rendered and
+            preloaded up front, stacked; hovering a row only toggles opacity, so
+            the swap is instant — no fetch-on-hover, no mount/unmount lag. */}
         <div className="hidden lg:block">
           <div className="sticky top-28 aspect-[4/5] overflow-hidden rounded-2xl tile-surface">
-            <AnimatePresence mode="wait">
-              <motion.div
-                key={current.id}
-                initial={{ opacity: 0, scale: 1.05 }}
-                animate={{ opacity: 1, scale: 1 }}
-                exit={{ opacity: 0 }}
-                transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
-                className="absolute inset-0"
+            {timeline.map((event, i) => (
+              <div
+                key={event.id}
+                aria-hidden={i !== active}
+                className={cn(
+                  "absolute inset-0 transition-opacity duration-500 ease-out",
+                  i === active ? "opacity-100" : "opacity-0",
+                )}
               >
                 <SmartImage
-                  src={current.image}
-                  alt={current.title}
+                  src={event.image}
+                  alt={event.title}
                   fill
                   sizes="40vw"
-                  className="object-cover ken-burns"
+                  className={cn("object-cover", i === active && "ken-burns")}
                 />
-                <PanelFX />
-                <div className="absolute inset-0 bg-gradient-to-t from-base/80 via-transparent to-transparent" />
-                <div className="absolute bottom-6 left-6">
-                  <p className={cn("text-eyebrow uppercase", activeAccent)}>{current.label}</p>
-                  <p className="mt-1 font-display text-2xl text-primary">{current.title}</p>
-                </div>
-              </motion.div>
-            </AnimatePresence>
+              </div>
+            ))}
+            <PanelFX />
+            <div className="absolute inset-0 bg-gradient-to-t from-base/80 via-transparent to-transparent" />
+            <div className="absolute bottom-6 left-6">
+              <p className={cn("text-eyebrow uppercase", activeAccent)}>{current.label}</p>
+              <p className="mt-1 font-display text-2xl text-primary">{current.title}</p>
+            </div>
           </div>
         </div>
       </div>

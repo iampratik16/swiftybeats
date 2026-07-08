@@ -1,13 +1,15 @@
-"use client";
-
-import { useEffect, useRef, useState } from "react";
 import { spotify } from "@/lib/links";
 import { cn } from "@/lib/utils";
 
 /**
- * Styled, dark-theme Spotify embed for full-track listening (brief §7). The
- * heavy iframe is only injected once scrolled near the viewport, so it never
- * blocks first paint. Wrapped in glass so it never reads as a bare embed.
+ * Styled Spotify embed for full-track listening (brief §7).
+ *
+ * The iframe is rendered in the INITIAL HTML (server component, no JS gate), so
+ * the browser starts fetching it via native lazy-loading at the right moment —
+ * it never waits on the heavy bundle to hydrate first (which stacked hydration
+ * time on top of Spotify's fetch and made the box slow to appear). A dark
+ * skeleton sits behind it: space is reserved (no layout shift) and the "Loading"
+ * state shows until Spotify's player paints over it.
  */
 export function SpotifyEmbed({
   type,
@@ -25,54 +27,30 @@ export function SpotifyEmbed({
   bare?: boolean;
   className?: string;
 }) {
-  const ref = useRef<HTMLDivElement>(null);
-  const [load, setLoad] = useState(false);
   const height = compact ? 152 : 352;
-
-  useEffect(() => {
-    const el = ref.current;
-    if (!el) return;
-    const io = new IntersectionObserver(
-      ([e]) => {
-        if (e.isIntersecting) {
-          setLoad(true);
-          io.disconnect();
-        }
-      },
-      { rootMargin: "250px" },
-    );
-    io.observe(el);
-    return () => io.disconnect();
-  }, []);
 
   return (
     <div
-      ref={ref}
       className={cn(
         "overflow-hidden rounded-2xl p-1.5",
         bare ? "rounded-[inherit]" : "glass",
         className,
       )}
     >
-      {load ? (
+      <div className="relative rounded-xl bg-elevated/70" style={{ height }}>
+        {/* Skeleton behind the iframe — visible only until Spotify's UI paints */}
+        <div className="absolute inset-0 grid place-items-center">
+          <span className="animate-pulse text-sm text-faint">Loading player…</span>
+        </div>
         <iframe
           src={spotify.embed(type, id)}
           title={title}
-          width="100%"
-          height={height}
           loading="lazy"
           allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"
-          className="rounded-xl"
+          className="absolute inset-0 h-full w-full rounded-xl"
           style={{ border: 0 }}
         />
-      ) : (
-        <div
-          style={{ height }}
-          className="grid place-items-center rounded-xl bg-elevated/60"
-        >
-          <span className="text-sm text-faint">Loading player</span>
-        </div>
-      )}
+      </div>
     </div>
   );
 }

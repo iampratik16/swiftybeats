@@ -1,6 +1,6 @@
 import { featuredRelease } from "@/lib/content";
 import { spotify, socials } from "@/lib/links";
-import { SpotifyFacade } from "@/components/media/SpotifyFacade";
+import { SpotifyEmbed } from "@/components/media/SpotifyEmbed";
 import { SmartImage } from "@/components/media/SmartImage";
 import { Reveal } from "@/components/ui/Reveal";
 import { SplitText } from "@/components/ui/SplitText";
@@ -51,14 +51,11 @@ export function FeaturedRelease() {
         </div>
         <Reveal>
           <BorderGlow alwaysOn borderRadius={20} glowRadius={30} backgroundColor="#1d1512">
-            <SpotifyFacade
+            <SpotifyEmbed
               bare
               type={spotify.featured.type}
               id={spotify.featured.id}
               title={`Swifty Beats — ${spotify.featured.title}`}
-              cover={spotify.featured.cover}
-              heading={spotify.featured.title}
-              sub="Latest single · Preview on Spotify"
             />
           </BorderGlow>
         </Reveal>

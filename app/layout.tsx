@@ -69,6 +69,8 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
     <html lang="en-GB" className={`${clashDisplay.variable} ${satoshi.variable} ${fraunces.variable}`}>
       <head>
         <link rel="preconnect" href="https://open.spotify.com" />
+        <link rel="preconnect" href="https://open.spotifycdn.com" crossOrigin="" />
+        <link rel="preconnect" href="https://i.scdn.co" crossOrigin="" />
         <link rel="preconnect" href="https://w.soundcloud.com" />
         <link rel="preconnect" href="https://www.youtube-nocookie.com" />
         <script

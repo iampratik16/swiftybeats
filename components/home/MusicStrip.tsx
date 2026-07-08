@@ -1,7 +1,7 @@
 import { musicPlatforms } from "@/lib/content";
 import { spotify } from "@/lib/links";
 import { socialIcons } from "@/components/brand/SocialIcons";
-import { SpotifyEmbed } from "@/components/media/SpotifyEmbed";
+import { SpotifyFacade } from "@/components/media/SpotifyFacade";
 import { Reveal } from "@/components/ui/Reveal";
 import { SplitText } from "@/components/ui/SplitText";
 import { BorderGlow } from "@/components/ui/BorderGlow";
@@ -83,7 +83,15 @@ export function MusicStrip() {
       {/* His Spotify — top tracks, straight from the source */}
       <Reveal className="mt-6" delay={0.1}>
         <BorderGlow alwaysOn borderRadius={20} glowRadius={28} backgroundColor="#1d1512">
-          <SpotifyEmbed bare type="artist" id={spotify.artistId} title="Swifty Beats on Spotify" />
+          <SpotifyFacade
+            bare
+            type="artist"
+            id={spotify.artistId}
+            title="Swifty Beats on Spotify"
+            cover="/assets/artist/swifty-portrait.jpg"
+            heading="Swifty Beats"
+            sub="Top tracks · Preview on Spotify"
+          />
         </BorderGlow>
       </Reveal>
     </section>

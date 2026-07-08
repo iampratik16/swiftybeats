@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import { releases, musicPlatforms } from "@/lib/content";
 import { spotify, media, HANDLE } from "@/lib/links";
 import { SmartImage } from "@/components/media/SmartImage";
-import { SpotifyEmbed } from "@/components/media/SpotifyEmbed";
+import { SpotifyFacade } from "@/components/media/SpotifyFacade";
 import { YouTubeFacade } from "@/components/media/YouTubeFacade";
 import { socialIcons } from "@/components/brand/SocialIcons";
 import { SplitText } from "@/components/ui/SplitText";
@@ -77,7 +77,15 @@ export default function MusicPage() {
           <h2 className="text-eyebrow uppercase text-faint">On Spotify</h2>
           <div className="mt-6">
             <BorderGlow alwaysOn borderRadius={20} glowRadius={28} backgroundColor="#1d1512">
-              <SpotifyEmbed bare type="artist" id={spotify.artistId} title="Swifty Beats on Spotify" />
+              <SpotifyFacade
+                bare
+                type="artist"
+                id={spotify.artistId}
+                title="Swifty Beats on Spotify"
+                cover="/assets/artist/swifty-portrait.jpg"
+                heading="Swifty Beats"
+                sub="Top tracks · Preview on Spotify"
+              />
             </BorderGlow>
           </div>
         </div>

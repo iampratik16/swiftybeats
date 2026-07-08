@@ -13,11 +13,12 @@ export const metadata: Metadata = {
 
 export default function BookingPage() {
   return (
-    <div className="relative isolate">
+    <div className="relative isolate min-h-[100svh] overflow-hidden">
       {/* Full-bleed live-stage backdrop (his own show photo), held behind the
-          content. Warm-dark washes keep the gold/white type legible over the
-          busy black-and-white shot and blend it into the warm theme. */}
-      <div className="fixed inset-0 -z-10" aria-hidden>
+          content. Absolute (not fixed) so mobile's collapsing address bar can't
+          resize it mid-scroll and make the image appear to zoom. Warm-dark
+          washes keep the gold/white type legible and blend it into the theme. */}
+      <div className="absolute inset-0 -z-10" aria-hidden>
         <SmartImage
           src="/assets/booking-stage.jpg"
           alt=""

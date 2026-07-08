@@ -5,6 +5,7 @@ import { SpotifyEmbed } from "@/components/media/SpotifyEmbed";
 import { Reveal } from "@/components/ui/Reveal";
 import { SplitText } from "@/components/ui/SplitText";
 import { BorderGlow } from "@/components/ui/BorderGlow";
+import { cn } from "@/lib/utils";
 
 function ArrowUpRight() {
   return (
@@ -13,6 +14,10 @@ function ArrowUpRight() {
     </svg>
   );
 }
+
+// Each platform lights its icon + arrow in its own jewel colour on hover —
+// Spotify teal, SoundCloud vermilion, YouTube rose. Cycled for extras.
+const ACCENT = ["group-hover:text-teal", "group-hover:text-vermilion", "group-hover:text-rose"];
 
 export function MusicStrip() {
   return (
@@ -43,13 +48,23 @@ export function MusicStrip() {
                 data-cursor="visit"
                 className="group block h-56 transition-transform duration-500 hover:-translate-y-1"
               >
-                <BorderGlow alwaysOn borderRadius={24} glowRadius={24} backgroundColor="#141416" className="h-full">
+                <BorderGlow alwaysOn borderRadius={24} glowRadius={24} backgroundColor="#1d1512" className="h-full">
                   <div className="flex h-full flex-col justify-between p-7">
                     <div className="flex items-center justify-between">
                       {Icon ? (
-                        <Icon className="h-8 w-8 text-primary transition-colors duration-500 group-hover:text-gold" />
+                        <Icon
+                          className={cn(
+                            "h-8 w-8 text-primary transition-colors duration-500",
+                            ACCENT[i % ACCENT.length],
+                          )}
+                        />
                       ) : null}
-                      <span className="text-faint transition-colors duration-500 group-hover:text-gold">
+                      <span
+                        className={cn(
+                          "text-faint transition-colors duration-500",
+                          ACCENT[i % ACCENT.length],
+                        )}
+                      >
                         <ArrowUpRight />
                       </span>
                     </div>
@@ -67,7 +82,7 @@ export function MusicStrip() {
 
       {/* His Spotify — top tracks, straight from the source */}
       <Reveal className="mt-6" delay={0.1}>
-        <BorderGlow alwaysOn borderRadius={20} glowRadius={28} backgroundColor="#141416">
+        <BorderGlow alwaysOn borderRadius={20} glowRadius={28} backgroundColor="#1d1512">
           <SpotifyEmbed bare type="artist" id={spotify.artistId} title="Swifty Beats on Spotify" />
         </BorderGlow>
       </Reveal>

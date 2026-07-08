@@ -1,5 +1,6 @@
 import { SplitText } from "@/components/ui/SplitText";
 import { MagneticButton } from "@/components/ui/MagneticButton";
+import { Waveband } from "@/components/ui/Waveband";
 
 type CTA = { label: string; href: string; cursorLabel?: string; ariaLabel?: string };
 
@@ -20,11 +21,20 @@ export function ComingSoon({
   primary?: CTA;
   footnote?: React.ReactNode;
 }) {
+  // Jewel-accent the last word of the title (the funk signature, site-wide).
+  const words = title.split(" ");
+  const tail = words.pop() ?? "";
+  const head = words.join(" ");
   return (
     <div className="mx-auto flex min-h-[72vh] max-w-3xl flex-col items-center justify-center px-6 pb-28 pt-40 text-center md:pt-48">
-      <p className="text-eyebrow uppercase text-gold">{eyebrow}</p>
+      <div className="flex items-center gap-3">
+        <p className="text-eyebrow uppercase text-gold">{eyebrow}</p>
+        <Waveband className="h-4" />
+      </div>
       <h1 className="mt-6 text-hero font-semibold leading-[0.9]">
-        <SplitText text={title} immediate />
+        {head && <SplitText text={head} immediate />}
+        {head && " "}
+        <SplitText text={tail} immediate className="accent font-normal text-jewel" />
       </h1>
       <p className="mt-6 max-w-xl text-lg text-muted">{description}</p>
       {primary && (

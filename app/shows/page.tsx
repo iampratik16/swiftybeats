@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { ComingSoon } from "@/components/ui/ComingSoon";
 import { MagneticButton } from "@/components/ui/MagneticButton";
 import { SplitText } from "@/components/ui/SplitText";
+import { Waveband } from "@/components/ui/Waveband";
 import { shows } from "@/lib/content";
 
 export const metadata: Metadata = {
@@ -32,9 +33,13 @@ export default function ShowsPage() {
   return (
     <div className="mx-auto max-w-5xl px-6 pb-28 pt-40 md:pt-48">
       <header className="max-w-3xl">
-        <p className="text-eyebrow uppercase text-gold">Shows</p>
+        <div className="flex items-center gap-4">
+          <p className="text-eyebrow uppercase text-gold">Shows</p>
+          <Waveband className="h-4" />
+        </div>
         <h1 className="mt-6 text-display font-semibold">
-          <SplitText text="Live dates." immediate />
+          <SplitText text="Live" immediate />{" "}
+          <SplitText text="dates." immediate className="accent font-normal text-jewel" />
         </h1>
       </header>
 

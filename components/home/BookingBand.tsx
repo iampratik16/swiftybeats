@@ -4,10 +4,11 @@ import { SplitText } from "@/components/ui/SplitText";
 import { SmartImage } from "@/components/media/SmartImage";
 import { BorderGlow } from "@/components/ui/BorderGlow";
 
+// Each credibility stat in its own jewel colour, matching the palette.
 const stats = [
-  ["5M+", "Streams"],
-  ["Wireless", "Glastonbury"],
-  ["BBC", "Radio play"],
+  ["5M+", "Streams", "text-gold"],
+  ["Wireless", "Glastonbury", "text-teal"],
+  ["BBC", "Radio play", "text-rose"],
 ];
 
 /**
@@ -52,9 +53,9 @@ export function BookingBand() {
             </a>
           </div>
           <dl className="mt-2 flex flex-wrap gap-x-10 gap-y-4 border-t border-white/10 pt-6">
-            {stats.map(([big, small]) => (
+            {stats.map(([big, small, colour]) => (
               <div key={big}>
-                <dt className="font-display text-2xl font-semibold text-gold">{big}</dt>
+                <dt className={`font-display text-2xl font-semibold ${colour}`}>{big}</dt>
                 <dd className="text-sm text-faint">{small}</dd>
               </div>
             ))}

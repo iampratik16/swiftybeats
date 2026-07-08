@@ -3,6 +3,7 @@ import { SmartImage } from "@/components/media/SmartImage";
 import { MagneticButton } from "@/components/ui/MagneticButton";
 import { SplitText } from "@/components/ui/SplitText";
 import { Reveal } from "@/components/ui/Reveal";
+import { Waveband } from "@/components/ui/Waveband";
 
 export const metadata: Metadata = {
   title: "About",
@@ -11,9 +12,9 @@ export const metadata: Metadata = {
 };
 
 const facts = [
-  ["5M+", "Streams"],
-  ["7", "First dhol"],
-  ["2", "Landmark festivals"],
+  ["5M+", "Streams", "text-gold"],
+  ["7", "First dhol", "text-teal"],
+  ["2", "Landmark festivals", "text-rose"],
 ];
 
 export default function AboutPage() {
@@ -22,9 +23,13 @@ export default function AboutPage() {
       {/* Hero */}
       <section className="mx-auto grid max-w-6xl gap-12 px-6 lg:grid-cols-[0.85fr_1.15fr] lg:items-center lg:gap-16">
         <div>
-          <p className="text-eyebrow uppercase text-gold">Asian House Producer · UK DJ</p>
+          <div className="flex items-center gap-4">
+            <p className="text-eyebrow uppercase text-gold">Asian House Producer · UK DJ</p>
+            <Waveband className="h-4" />
+          </div>
           <h1 className="mt-6 text-hero font-semibold leading-[0.92]">
-            <SplitText text="Percussion to house." immediate />
+            <SplitText text="Percussion to" immediate />{" "}
+            <SplitText text="house." immediate className="accent font-normal text-jewel" />
           </h1>
           <p className="mt-7 max-w-lg text-lg text-muted">
             Swifty Beats is an Asian House producer and DJ, working the rare
@@ -32,9 +37,9 @@ export default function AboutPage() {
             electronic production.
           </p>
           <dl className="mt-10 flex flex-wrap gap-x-10 gap-y-4">
-            {facts.map(([big, small]) => (
+            {facts.map(([big, small, colour]) => (
               <div key={small}>
-                <dt className="font-display text-3xl font-semibold text-gold">{big}</dt>
+                <dt className={`font-display text-3xl font-semibold ${colour}`}>{big}</dt>
                 <dd className="text-sm text-faint">{small}</dd>
               </div>
             ))}
@@ -48,6 +53,7 @@ export default function AboutPage() {
               fill
               priority
               sizes="(max-width: 1024px) 100vw, 58vw"
+              className="ken-burns"
             />
           </div>
         </Reveal>
@@ -95,9 +101,15 @@ export default function AboutPage() {
           ["/assets/generated/era-studio.avif", "Studio"],
           ["/assets/generated/era-festival.avif", "Live"],
         ].map(([src, label]) => (
-          <div key={label} className="relative aspect-[4/5] overflow-hidden rounded-xl tile-surface md:aspect-square">
-            <SmartImage src={src} alt={label} fill sizes="33vw" />
-            <span className="absolute bottom-3 left-3 text-eyebrow uppercase text-primary/80">
+          <div key={label} className="group relative aspect-[4/5] overflow-hidden rounded-xl tile-surface md:aspect-square">
+            <SmartImage
+              src={src}
+              alt={label}
+              fill
+              sizes="33vw"
+              className="transition-transform duration-700 ease-out group-hover:scale-105"
+            />
+            <span className="absolute bottom-3 left-3 text-eyebrow uppercase text-gold">
               {label}
             </span>
           </div>

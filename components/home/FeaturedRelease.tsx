@@ -5,6 +5,7 @@ import { SmartImage } from "@/components/media/SmartImage";
 import { Reveal } from "@/components/ui/Reveal";
 import { SplitText } from "@/components/ui/SplitText";
 import { BorderGlow } from "@/components/ui/BorderGlow";
+import { Waveband } from "@/components/ui/Waveband";
 
 export function FeaturedRelease() {
   return (
@@ -17,7 +18,10 @@ export function FeaturedRelease() {
       </div>
       <div className="mx-auto grid max-w-6xl gap-12 px-6 md:grid-cols-2 md:items-center md:gap-16">
         <div>
-          <p className="text-eyebrow uppercase text-gold">{featuredRelease.eyebrow}</p>
+          <div className="flex items-center gap-4">
+            <p className="text-eyebrow uppercase text-gold">{featuredRelease.eyebrow}</p>
+            <Waveband />
+          </div>
           <h2 className="mt-5 text-display font-semibold">
             <SplitText text={featuredRelease.title} immediate />
           </h2>

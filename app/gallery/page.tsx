@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { InstagramEmbeds } from "@/components/gallery/InstagramEmbeds";
 import { SplitText } from "@/components/ui/SplitText";
+import { Waveband } from "@/components/ui/Waveband";
 import { socials, HANDLE } from "@/lib/links";
 import { socialIcons } from "@/components/brand/SocialIcons";
 
@@ -26,9 +27,13 @@ export default function GalleryPage() {
   return (
     <div className="mx-auto max-w-6xl px-6 pb-28 pt-40 md:pt-48">
       <header className="mb-12 max-w-3xl">
-        <p className="text-eyebrow uppercase text-gold">Gallery</p>
+        <div className="flex items-center gap-4">
+          <p className="text-eyebrow uppercase text-gold">Gallery</p>
+          <Waveband className="h-4" />
+        </div>
         <h1 className="mt-6 text-display font-semibold">
-          <SplitText text="Live, studio, backstage." immediate />
+          <SplitText text="Live, studio," immediate />{" "}
+          <SplitText text="backstage." immediate className="accent font-normal text-jewel" />
         </h1>
         <p className="mt-6 text-lg text-muted">
           Posts and reels straight from Instagram. Follow along for the latest.

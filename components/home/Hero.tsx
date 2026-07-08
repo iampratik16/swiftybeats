@@ -4,6 +4,7 @@ import { motion } from "framer-motion";
 import { SmartVideo } from "@/components/media/SmartVideo";
 import { MagneticButton } from "@/components/ui/MagneticButton";
 import { SplitText } from "@/components/ui/SplitText";
+import { TrackSpec } from "@/components/ui/TrackSpec";
 import { socials } from "@/lib/links";
 
 /**
@@ -38,18 +39,17 @@ export function Hero({ hasVideo = false }: { hasVideo?: boolean }) {
       </div>
 
       <div className="relative w-full max-w-4xl">
-        <motion.p
+        <motion.div
           initial={{ opacity: 0, y: 10 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.15, duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
-          className="flex items-center gap-3 text-eyebrow uppercase text-gold [text-shadow:0_1px_20px_rgba(0,0,0,0.7)]"
         >
-          <span className="h-px w-8 bg-gold/60" aria-hidden />
-          Asian House Producer · UK DJ
-        </motion.p>
+          <TrackSpec className="[text-shadow:0_1px_20px_rgba(0,0,0,0.7)]" />
+        </motion.div>
 
-        <h1 className="mt-6 text-[clamp(3rem,11vw,9rem)] font-semibold leading-[0.86] tracking-[-0.04em] [text-shadow:0_2px_50px_rgba(0,0,0,0.6)]">
-          <SplitText text="Swifty Beats" delay={0.2} immediate />
+        <h1 className="mt-6 font-display text-[clamp(3rem,11vw,9rem)] font-semibold leading-[0.9] tracking-[-0.04em] [text-shadow:0_2px_50px_rgba(0,0,0,0.6)]">
+          <SplitText text="Swifty" delay={0.2} immediate />{" "}
+          <SplitText text="Beats" delay={0.34} immediate className="accent font-normal text-jewel" />
         </h1>
 
         <motion.p
@@ -61,6 +61,32 @@ export function Hero({ hasVideo = false }: { hasVideo?: boolean }) {
           South Asian percussion, built for the dancefloor. Dhol heritage fused
           with house and electronic production.
         </motion.p>
+
+        {/* Live multicolour waveform beat-signal — pure CSS, breathes on staggered delays */}
+        <motion.span
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ delay: 1, duration: 0.8 }}
+          aria-hidden
+          className="waveband mt-7 h-8 !justify-start"
+        >
+          {WAVE.map((h, i) => (
+            <span
+              key={i}
+              style={{
+                ["--h" as string]: `${h}%`,
+                ["--d" as string]: `${700 + ((i * 53) % 500)}ms`,
+                ["--delay" as string]: `${(i * 47) % 600}ms`,
+                background:
+                  i % 3 === 0
+                    ? "var(--color-vermilion)"
+                    : i % 3 === 1
+                      ? "var(--color-gold)"
+                      : "var(--color-teal)",
+              }}
+            />
+          ))}
+        </motion.span>
 
         <motion.div
           initial={{ opacity: 0, y: 12 }}
@@ -113,3 +139,7 @@ export function Hero({ hasVideo = false }: { hasVideo?: boolean }) {
     </section>
   );
 }
+
+// Bar heights for the hero waveform (percent). Fixed array so SSR and client
+// render identically — no Math.random hydration mismatch.
+const WAVE = [38, 62, 46, 88, 54, 72, 40, 96, 58, 44, 80, 50, 66, 42, 90, 56, 48, 76, 52, 60];

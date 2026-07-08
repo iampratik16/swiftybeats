@@ -4,9 +4,14 @@ import { motion, useReducedMotion } from "framer-motion";
 import { cn } from "@/lib/utils";
 
 /**
- * Word-by-word clip reveal for headings (brief §3.4, §10). Each word rides up
- * from behind an overflow mask, staggered. Screen readers get the whole phrase
- * once via aria-label; the animated spans are hidden from them.
+ * Word-by-word reveal for headings (brief §3.4, §10): each word fades and rises
+ * a touch, staggered. Screen readers get the whole phrase via aria-label.
+ *
+ * No overflow mask — that clipped descenders (g/y/p) and swallowed inter-word
+ * spaces. Instead: fade + small translateY, with the visual className (incl. the
+ * text-jewel gradient) on the SAME element that transforms, so background-clip
+ * text keeps painting. Spaces are real text nodes between words, so lines wrap
+ * and space normally.
  */
 export function SplitText({
   text,
@@ -19,8 +24,7 @@ export function SplitText({
   className?: string;
   delay?: number;
   stagger?: number;
-  /** Animate on mount rather than on scroll-into-view. Use above the fold,
-   *  where the element is already in view and whileInView is the wrong trigger. */
+  /** Animate on mount rather than on scroll-into-view. Use above the fold. */
   immediate?: boolean;
 }) {
   const reduced = useReducedMotion();
@@ -28,31 +32,41 @@ export function SplitText({
 
   if (reduced) return <span className={className}>{text}</span>;
 
-  const reveal = immediate
-    ? { animate: { y: 0 } }
-    : { whileInView: { y: 0 }, viewport: { once: true } };
+  // Above-the-fold: CSS-driven, so the reveal plays at first paint and never
+  // waits on JS hydration (the heavy bundle delays that).
+  if (immediate) {
+    return (
+      <span className="inline" aria-label={text}>
+        {words.map((word, i) => (
+          <span key={`${word}-${i}`} aria-hidden className="inline">
+            <span
+              className={cn("word-rise", className)}
+              style={{ animationDelay: `${delay + i * stagger}s` }}
+            >
+              {word}
+            </span>
+            {i < words.length - 1 ? " " : ""}
+          </span>
+        ))}
+      </span>
+    );
+  }
 
+  // Scroll-triggered reveal keeps framer (needs viewport detection).
   return (
-    <span className={cn("inline-block", className)} aria-label={text}>
+    <span className="inline" aria-label={text}>
       {words.map((word, i) => (
-        <span
-          key={`${word}-${i}`}
-          aria-hidden
-          className="inline-block overflow-hidden align-top"
-        >
+        <span key={`${word}-${i}`} aria-hidden className="inline">
           <motion.span
-            className="inline-block"
-            initial={{ y: "115%" }}
-            {...reveal}
-            transition={{
-              duration: 0.9,
-              ease: [0.16, 1, 0.3, 1],
-              delay: delay + i * stagger,
-            }}
+            className={cn(className)}
+            initial={{ opacity: 0 }}
+            whileInView={{ opacity: 1 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1], delay: delay + i * stagger }}
           >
             {word}
-            {i < words.length - 1 ? " " : ""}
           </motion.span>
+          {i < words.length - 1 ? " " : ""}
         </span>
       ))}
     </span>

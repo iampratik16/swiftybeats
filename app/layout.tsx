@@ -1,5 +1,5 @@
 import type { Metadata, Viewport } from "next";
-import { clashDisplay, satoshi } from "./fonts";
+import { clashDisplay, satoshi, fraunces } from "./fonts";
 import "./globals.css";
 import { site, socials } from "@/lib/links";
 import { LenisProvider } from "@/components/providers/LenisProvider";
@@ -49,7 +49,7 @@ export const metadata: Metadata = {
 };
 
 export const viewport: Viewport = {
-  themeColor: "#0a0a0b",
+  themeColor: "#140f0c",
   colorScheme: "dark",
 };
 
@@ -66,7 +66,7 @@ const personJsonLd = {
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="en-GB" className={`${clashDisplay.variable} ${satoshi.variable}`}>
+    <html lang="en-GB" className={`${clashDisplay.variable} ${satoshi.variable} ${fraunces.variable}`}>
       <head>
         <link rel="preconnect" href="https://open.spotify.com" />
         <link rel="preconnect" href="https://w.soundcloud.com" />

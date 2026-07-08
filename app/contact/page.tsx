@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { ContactForm } from "@/components/contact/ContactForm";
 import { SplitText } from "@/components/ui/SplitText";
+import { Waveband } from "@/components/ui/Waveband";
 import { SocialLinks } from "@/components/shell/SocialLinks";
 import { management } from "@/lib/links";
 
@@ -14,9 +15,13 @@ export default function ContactPage() {
   return (
     <div className="mx-auto max-w-6xl px-6 pb-28 pt-40 md:pt-48">
       <header className="max-w-3xl">
-        <p className="text-eyebrow uppercase text-gold">Contact</p>
+        <div className="flex items-center gap-4">
+          <p className="text-eyebrow uppercase text-gold">Contact</p>
+          <Waveband className="h-4" />
+        </div>
         <h1 className="mt-6 text-display font-semibold">
-          <SplitText text="Let's talk." immediate />
+          <SplitText text="Let's" immediate />{" "}
+          <SplitText text="talk." immediate className="accent font-normal text-jewel" />
         </h1>
         <p className="mt-6 max-w-xl text-lg text-muted">
           Bookings, press and every other enquiry are handled by management.

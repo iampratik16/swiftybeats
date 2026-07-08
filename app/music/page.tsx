@@ -8,6 +8,7 @@ import { socialIcons } from "@/components/brand/SocialIcons";
 import { SplitText } from "@/components/ui/SplitText";
 import { Reveal } from "@/components/ui/Reveal";
 import { BorderGlow } from "@/components/ui/BorderGlow";
+import { Waveband } from "@/components/ui/Waveband";
 
 export const metadata: Metadata = {
   title: "Music",
@@ -19,9 +20,13 @@ export default function MusicPage() {
   return (
     <div className="mx-auto max-w-6xl px-6 pb-28 pt-40 md:pt-48">
       <header className="max-w-3xl">
-        <p className="text-eyebrow uppercase text-gold">Music</p>
+        <div className="flex items-center gap-4">
+          <p className="text-eyebrow uppercase text-gold">Music</p>
+          <Waveband className="h-4" />
+        </div>
         <h1 className="mt-6 text-display font-semibold">
-          <SplitText text="Remixes, bootlegs and originals." immediate />
+          <SplitText text="Remixes, bootlegs and" immediate />{" "}
+          <SplitText text="originals." immediate className="accent font-normal text-jewel" />
         </h1>
         <p className="mt-6 text-lg text-muted">
           Full-track listening through Spotify, remixes and bootlegs through
@@ -71,7 +76,7 @@ export default function MusicPage() {
         <div>
           <h2 className="text-eyebrow uppercase text-faint">On Spotify</h2>
           <div className="mt-6">
-            <BorderGlow alwaysOn borderRadius={20} glowRadius={28} backgroundColor="#141416">
+            <BorderGlow alwaysOn borderRadius={20} glowRadius={28} backgroundColor="#1d1512">
               <SpotifyEmbed bare type="artist" id={spotify.artistId} title="Swifty Beats on Spotify" />
             </BorderGlow>
           </div>
@@ -99,7 +104,7 @@ export default function MusicPage() {
                 data-cursor="visit"
                 className="group block"
               >
-                <BorderGlow alwaysOn borderRadius={18} glowRadius={18} backgroundColor="#141416" className="h-full">
+                <BorderGlow alwaysOn borderRadius={18} glowRadius={18} backgroundColor="#1d1512" className="h-full">
                   <div className="flex items-center gap-4 p-5">
                     {Icon ? (
                       <Icon className="h-7 w-7 text-primary transition-colors group-hover:text-gold" />

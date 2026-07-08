@@ -1,4 +1,16 @@
 import localFont from "next/font/local";
+import { Fraunces } from "next/font/google";
+
+// Warm italic editorial accent (the Fraunces flourish approved in the Palace
+// concept). Only the italic 400/500 are used, for the odd accented word.
+export const fraunces = Fraunces({
+  subsets: ["latin"],
+  weight: ["400", "500"],
+  style: ["italic"],
+  variable: "--font-fraunces",
+  display: "swap",
+  fallback: ["Georgia", "Times New Roman", "serif"],
+});
 
 // Self-hosted from Fontshare (see brief 3.4). Variable weights subset to Latin.
 // Exposed as CSS variables so the Tailwind @theme tokens can reference them.

@@ -6,28 +6,34 @@
  * (bg-base, text-primary, text-gold, font-display, ease-out-expo, ...).
  * ------------------------------------------------------------------ */
 @theme {
-  /* Dark neutral scale */
-  --color-base: #0a0a0b;
-  --color-raised: #141416;
-  --color-elevated: #1b1b1e;
+  /* Warm-dark neutral scale — pulled from the komi world + cover art, not cold black */
+  --color-base: #140f0c;
+  --color-raised: #1d1512;
+  --color-elevated: #241a15;
   /* Near-black for dark text on gold/light surfaces. Separate from `base` so
      `text-base` stays the font-size utility (avoids the v4 size/colour clash). */
-  --color-ink: #0a0a0b;
+  --color-ink: #17110c;
 
-  /* Warm off-white type + muted greys */
-  --color-primary: #f4f2ec;
-  --color-muted: #9a968c;
-  --color-faint: #5a574f;
+  /* Warm cream type + warm muted greys */
+  --color-primary: #f3eadc;
+  --color-muted: #a89482;
+  --color-faint: #6f5f52;
 
-  /* Signature gold + reactive accents (violet/teal live in the visualiser) */
-  --color-gold: #e6b45a;
-  --color-gold-bright: #f6ce7b;
+  /* Signature warm gold + jewel accents lifted from the artwork (Freedom /
+     Ma Penzi): vermilion, teal, rose. These are the "funk" palette. */
+  --color-gold: #e2ac5c;
+  --color-gold-bright: #f2c877;
+  --color-vermilion: #d64d2c;
+  --color-teal: #33a596;
+  --color-rose: #d97b66;
+  /* Kept for the audio visualiser */
   --color-reactive: #6e56f6;
   --color-reactive-2: #2bd9c6;
   --color-danger: #e5484d;
 
-  /* Fonts — reference the next/font CSS variables, fall back gracefully */
+  /* Fonts — Clash = funky display, Fraunces = warm italic accents, Satoshi = body */
   --font-display: var(--font-clash), ui-sans-serif, system-ui, sans-serif;
+  --font-accent: var(--font-fraunces), Georgia, "Times New Roman", serif;
   --font-body: var(--font-satoshi), ui-sans-serif, system-ui, sans-serif;
 
   /* Fluid editorial type scale */
@@ -54,13 +60,14 @@
 
 /* Non-utility custom properties (glass recipe + grain, read by CSS/JS) */
 :root {
-  --glass-bg: rgba(20, 20, 22, 0.55);
-  --glass-border: rgba(255, 255, 255, 0.08);
+  /* Warm-tinted frosted glass — a hint of amber, not neutral grey */
+  --glass-bg: rgba(29, 21, 18, 0.55);
+  --glass-border: rgba(242, 200, 120, 0.12);
   /* 14px (was 20) — a smaller blur radius composites far cheaper per scroll
      frame while still reading as frosted glass. */
   --glass-blur: 14px;
-  --glass-highlight: rgba(255, 255, 255, 0.06);
-  --shadow-glass: 0 24px 60px -20px rgba(0, 0, 0, 0.7);
+  --glass-highlight: rgba(255, 240, 220, 0.06);
+  --shadow-glass: 0 24px 60px -20px rgba(0, 0, 0, 0.72);
 }
 
 /* ------------------------------------------------------------------ *
@@ -93,7 +100,7 @@
 
   ::selection {
     background: var(--color-gold);
-    color: #0a0a0b;
+    color: var(--color-ink);
   }
 
   :focus-visible {
@@ -151,14 +158,43 @@
     /* Higher opacity + a lighter blur radius: still fully obscures content
        behind the nav, but a 22px blur is far cheaper to composite per scroll
        frame than 48px (blur cost scales with radius area). */
-    --glass-bg: rgba(13, 13, 15, 0.82);
+    --glass-bg: rgba(20, 14, 11, 0.82);
     --glass-blur: 22px;
   }
   /* Near-opaque, heavy blur — for surfaces that must fully obscure what is
      behind them (mobile menu tray, docked player): focus, no bleed-through. */
   .glass-solid {
-    --glass-bg: rgba(10, 10, 11, 0.94);
+    --glass-bg: rgba(18, 13, 10, 0.94);
     --glass-blur: 34px;
+  }
+
+  /* Warm italic editorial accent — the Fraunces flourish (funk pass) */
+  .accent {
+    font-family: var(--font-accent);
+    font-style: italic;
+    font-weight: 400;
+  }
+  /* Jewel-gradient text fill for the odd hero/section word */
+  .text-jewel {
+    background: linear-gradient(100deg, var(--color-gold), var(--color-rose) 45%, var(--color-vermilion));
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+  }
+  /* Musical waveform — bars breathing on a beat (height per-bar via --h) */
+  .waveband {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 4px;
+    height: 2.5rem;
+  }
+  .waveband span {
+    width: 3px;
+    border-radius: 999px;
+    background: var(--color-gold);
+    height: var(--h, 40%);
+    animation: wave-beat var(--d, 900ms) ease-in-out var(--delay, 0ms) infinite;
   }
 
   /* Site-wide film grain — inline SVG turbulence, no image request.
@@ -236,9 +272,70 @@
 @keyframes record-spin {
   to { transform: rotate(360deg); }
 }
+/* Heading word reveal — CSS-driven so it plays at first paint, never waiting on
+   JS hydration. Opacity ONLY (no transform) so the word spans can stay `inline`:
+   inline elements never clip overflowing glyph ink, so descenders (g/y/p) render
+   in full. No overflow mask, no line-height hacks, spacing intact. */
+@keyframes word-rise {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+.word-rise { animation: word-rise 0.7s ease both; }
+/* Funk: waveform bars breathing on a beat */
+@keyframes wave-beat {
+  0%, 100% { transform: scaleY(0.35); }
+  50% { transform: scaleY(1); }
+}
+/* Funk: playful wobble for stickers / hovered artwork */
+@keyframes wobble {
+  0%, 100% { transform: rotate(-2.5deg); }
+  50% { transform: rotate(2.5deg); }
+}
+/* Funk: slow beat-pulse scale for accent dots and badges */
+@keyframes beat-pulse {
+  0%, 100% { transform: scale(1); opacity: 0.85; }
+  50% { transform: scale(1.35); opacity: 1; }
+}
+/* Funk: warm ambient glows drifting behind the hero */
+@keyframes glow-drift {
+  0%, 100% { transform: translate3d(0, 0, 0) scale(1); }
+  50% { transform: translate3d(3%, -4%, 0) scale(1.08); }
+}
+/* Live "Ken Burns" drift for image panels — transform only, so it runs on the
+   GPU compositor: no layout, no paint, no scroll cost. Image is always scaled
+   >1 so object-cover never reveals an edge as it pans. */
+@keyframes ken-burns {
+  0%   { transform: scale(1.06) translate3d(0, 0, 0); }
+  100% { transform: scale(1.16) translate3d(-1.5%, -2%, 0); }
+}
+/* Living-panel FX: drifting gold particles + a light sweep, over image panels.
+   transform + opacity only (compositor-cheap), so the "patterns move" without
+   touching scroll or load. */
+@keyframes particle-float {
+  0%   { transform: translate3d(0, 0, 0); opacity: 0.12; }
+  50%  { opacity: 0.85; }
+  100% { transform: translate3d(8px, -22px, 0); opacity: 0.12; }
+}
+@keyframes sheen-sweep {
+  0%   { transform: translateX(-120%) skewX(-14deg); opacity: 0; }
+  40%  { opacity: 0.6; }
+  100% { transform: translateX(320%) skewX(-14deg); opacity: 0; }
+}
 
 .animate-marquee {
   animation: marquee-x var(--marquee-duration, 40s) linear infinite;
+}
+.animate-wobble { animation: wobble 2.4s ease-in-out infinite; }
+.animate-beat { animation: beat-pulse 1.8s ease-in-out infinite; }
+.animate-glow-drift { animation: glow-drift 14s ease-in-out infinite; }
+.ken-burns { animation: ken-burns 22s ease-in-out infinite alternate; will-change: transform; }
+
+/* Funk: warm amber/jewel ambient wash for section backdrops */
+.fx-amber {
+  background:
+    radial-gradient(46% 40% at 12% 8%, rgba(226, 172, 92, 0.16), transparent 60%),
+    radial-gradient(42% 44% at 88% 18%, rgba(214, 77, 44, 0.13), transparent 62%),
+    radial-gradient(50% 50% at 72% 96%, rgba(51, 165, 150, 0.10), transparent 66%);
 }
 
 /* ------------------------------------------------------------------ *

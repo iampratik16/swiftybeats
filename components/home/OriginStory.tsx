@@ -5,6 +5,7 @@ import { AnimatePresence, motion } from "framer-motion";
 import { timeline } from "@/lib/content";
 import { SmartImage } from "@/components/media/SmartImage";
 import { SplitText } from "@/components/ui/SplitText";
+import { PanelFX } from "@/components/ui/PanelFX";
 import { cn } from "@/lib/utils";
 
 /**
@@ -12,9 +13,15 @@ import { cn } from "@/lib/utils";
  * row list; hovering a row crossfades the large sticky image panel to that
  * era's atmosphere (Vertex-generated). Mobile shows each image inline.
  */
+// Each era gets its own jewel colour, cycled from the artwork palette — the
+// timeline reads as a spectrum rather than a wall of gold.
+const ACCENTS = ["text-gold", "text-rose", "text-teal", "text-vermilion", "text-gold-bright", "text-teal"];
+const ACCENTS_DIM = ["text-gold/40", "text-rose/40", "text-teal/40", "text-vermilion/40", "text-gold-bright/40", "text-teal/40"];
+
 export function OriginStory() {
   const [active, setActive] = useState(0);
   const current = timeline[active];
+  const activeAccent = ACCENTS[active % ACCENTS.length];
 
   return (
     <section className="mx-auto max-w-7xl px-6 py-28 md:py-40">
@@ -37,12 +44,14 @@ export function OriginStory() {
               <li
                 key={event.id}
                 onMouseEnter={() => setActive(i)}
-                className="group grid grid-cols-[2.75rem_1fr] items-baseline gap-x-4 border-b border-white/10 py-7 md:grid-cols-[3.5rem_1.1fr_1fr] md:gap-x-8 md:py-9"
+                className="group grid grid-cols-[2.75rem_1fr] items-baseline gap-x-4 border-b border-white/10 py-7 transition-[padding] duration-300 hover:pl-2 md:grid-cols-[3.5rem_1.1fr_1fr] md:gap-x-8 md:py-9"
               >
                 <span
                   className={cn(
-                    "font-display text-lg tabular-nums transition-colors duration-300 md:text-2xl",
-                    isActive ? "text-gold" : "text-faint",
+                    "font-display text-lg tabular-nums transition-all duration-300 md:text-2xl",
+                    isActive
+                      ? `${ACCENTS[i % ACCENTS.length]} scale-110`
+                      : ACCENTS_DIM[i % ACCENTS_DIM.length],
                   )}
                 >
                   {event.marker}
@@ -88,11 +97,12 @@ export function OriginStory() {
                   alt={current.title}
                   fill
                   sizes="40vw"
-                  className="object-cover"
+                  className="object-cover ken-burns"
                 />
+                <PanelFX />
                 <div className="absolute inset-0 bg-gradient-to-t from-base/80 via-transparent to-transparent" />
                 <div className="absolute bottom-6 left-6">
-                  <p className="text-eyebrow uppercase text-gold">{current.label}</p>
+                  <p className={cn("text-eyebrow uppercase", activeAccent)}>{current.label}</p>
                   <p className="mt-1 font-display text-2xl text-primary">{current.title}</p>
                 </div>
               </motion.div>

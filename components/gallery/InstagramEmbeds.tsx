@@ -27,12 +27,47 @@ export function Gallery({ items }: { items: GalleryItem[] }) {
     <div className="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3">
       {items.map((item, i) =>
         item.type === "video" ? (
-          <GalleryVideo key={item.permalink} src={item.src} poster={item.poster} permalink={item.permalink} />
+          <VideoItem key={item.permalink} src={item.src} poster={item.poster} permalink={item.permalink} eager={i < 2} />
         ) : (
           <InstaEmbed key={item.permalink} url={item.permalink} eager={i < 2} />
         ),
       )}
     </div>
+  );
+}
+
+/** null until measured on the client, then whether the primary input is touch. */
+function useIsTouch() {
+  const [isTouch, setIsTouch] = useState<boolean | null>(null);
+  useEffect(() => {
+    const mq = window.matchMedia("(hover: none) and (pointer: coarse)");
+    const sync = () => setIsTouch(mq.matches);
+    sync();
+    mq.addEventListener("change", sync);
+    return () => mq.removeEventListener("change", sync);
+  }, []);
+  return isTouch;
+}
+
+/**
+ * A video post rendered by device: laptops keep the richer Instagram embed;
+ * touch devices (phones/tablets) — where the embed can't play video inline —
+ * get the self-hosted player. Shows the poster until the device is measured.
+ */
+function VideoItem({ src, poster, permalink, eager }: { src: string; poster: string; permalink: string; eager: boolean }) {
+  const isTouch = useIsTouch();
+
+  if (isTouch === null) {
+    return (
+      <div className={CARD}>
+        <SmartImage src={poster} alt="" fill sizes="(max-width:640px) 100vw, 33vw" className="object-cover" />
+      </div>
+    );
+  }
+  return isTouch ? (
+    <GalleryVideo src={src} poster={poster} permalink={permalink} />
+  ) : (
+    <InstaEmbed url={permalink} eager={eager} />
   );
 }
 

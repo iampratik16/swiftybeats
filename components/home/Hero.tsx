@@ -6,7 +6,6 @@ import { SmartVideo } from "@/components/media/SmartVideo";
 import { MagneticButton } from "@/components/ui/MagneticButton";
 import { SplitText } from "@/components/ui/SplitText";
 import { TrackSpec } from "@/components/ui/TrackSpec";
-import { socials } from "@/lib/links";
 
 /**
  * Flagship hero (brief §6.1). A high-quality Vertex/Veo loop IS the hero:
@@ -110,19 +109,6 @@ export function Hero({ hasVideo = false }: { hasVideo?: boolean }) {
         >
           <MagneticButton href="/booking" cursorLabel="book">
             Book Swifty
-          </MagneticButton>
-          <MagneticButton
-            variant="glass"
-            href={socials.spotify}
-            cursorLabel="listen"
-            ariaLabel="Listen on Spotify"
-          >
-            <span className="flex items-center gap-2">
-              Listen
-              <svg viewBox="0 0 24 24" width="14" height="14" fill="currentColor" aria-hidden>
-                <path d="M8 5v14l11-7z" />
-              </svg>
-            </span>
           </MagneticButton>
         </motion.div>
       </div>

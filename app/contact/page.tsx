@@ -47,7 +47,7 @@ export default function ContactPage() {
           </div>
           <div>
             <p className="text-eyebrow uppercase text-faint">Follow</p>
-            <SocialLinks className="mt-4" />
+            <SocialLinks className="mt-4 gap-6" iconClassName="h-7 w-7" />
           </div>
         </div>
 

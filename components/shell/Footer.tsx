@@ -21,7 +21,7 @@ export function Footer() {
         {/* CTA + newsletter */}
         <div className="grid gap-10 border-b border-white/10 pb-12 lg:grid-cols-2 lg:items-end">
           <div>
-            <p className="text-eyebrow uppercase text-gold">Asian House · Bookings open</p>
+            <p className="text-eyebrow uppercase text-gold">Asian House Production · Bookings open</p>
             <h2 className="mt-3 max-w-md font-display text-title font-semibold">
               Let&apos;s make it loud.
             </h2>

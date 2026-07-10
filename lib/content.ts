@@ -66,7 +66,7 @@ export const timeline = z.array(TimelineEvent).parse([
 /* ------------------------- Credentials marquee -------------------------- */
 // True credentials only — no invented festival names (brief §14).
 export const credentials = [
-  "Asian House",
+  "Asian House Production",
   "Wireless",
   "Glastonbury",
   "BBC Radio",

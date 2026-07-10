@@ -19,7 +19,7 @@ export const metadata: Metadata = {
     "The official site of Swifty Beats, an Asian House producer and DJ from the UK. South Asian percussion and dhol heritage fused with house and electronic production. Book for clubs, festivals and brand events.",
   keywords: [
     "Swifty Beats",
-    "Asian House",
+    "Asian House Production",
     "Asian House producer",
     "Asian House DJ",
     "UK DJ",
@@ -36,13 +36,13 @@ export const metadata: Metadata = {
     siteName: site.name,
     title: "Swifty Beats · Asian House Producer and DJ",
     description:
-      "Asian House. South Asian percussion heritage fused with house and electronic production.",
+      "Asian House Production. South Asian percussion heritage fused with house and electronic production.",
     images: [{ url: "/assets/generated/og.jpg", width: 1200, height: 630, alt: "Swifty Beats" }],
   },
   twitter: {
     card: "summary_large_image",
     title: "Swifty Beats · Asian House Producer",
-    description: "Asian House. South Asian percussion meets electronic production.",
+    description: "Asian House Production. South Asian percussion meets electronic production.",
     images: ["/assets/generated/og.jpg"],
   },
   robots: { index: true, follow: true },
@@ -58,7 +58,7 @@ const personJsonLd = {
   "@type": "MusicGroup",
   name: site.name,
   url: site.url,
-  genre: ["Asian House", "House", "Electronic", "South Asian fusion"],
+  genre: ["Asian House Production", "House", "Electronic", "South Asian fusion"],
   description:
     "Asian House producer and DJ from the UK, fusing dhol and South Asian percussion heritage with house and electronic production.",
   sameAs: [socials.spotify, socials.soundcloud, socials.youtube, socials.instagram, socials.tiktok],

@@ -6,12 +6,12 @@ export const primaryNav: NavItem[] = [
   { href: "/music", label: "Music" },
   { href: "/shows", label: "Shows" },
   { href: "/gallery", label: "Gallery" },
+  { href: "/press", label: "Press" },
   { href: "/contact", label: "Contact" },
 ];
 
 export const footerNav: NavItem[] = [
   ...primaryNav,
-  { href: "/press", label: "Press" },
   { href: "/booking", label: "Booking" },
   { href: "/shop", label: "Shop" },
   { href: "/news", label: "News" },

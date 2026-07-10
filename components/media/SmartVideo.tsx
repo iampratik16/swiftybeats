@@ -16,6 +16,16 @@ type SmartVideoProps = {
   priority?: boolean;
   /** Preload margin before the element enters the viewport */
   rootMargin?: string;
+  /** object-fit: "cover" fills+crops (default), "contain" shows the whole frame */
+  fit?: "cover" | "contain";
+  /** Controlled mute. Must start muted for mobile autoplay; flip to unmute. */
+  muted?: boolean;
+  /**
+   * Fill the whole box with a blurred, scaled copy of the video behind the main
+   * one. Lets a `fit="contain"` clip read full-bleed (every pixel is video) with
+   * the complete frame still uncropped and sharp in the centre. No black bars.
+   */
+  blurBackdrop?: boolean;
 };
 
 /**
@@ -32,6 +42,9 @@ export function SmartVideo({
   posterSizes = "100vw",
   priority = false,
   rootMargin = "300px",
+  fit = "cover",
+  muted = true,
+  blurBackdrop = false,
 }: SmartVideoProps) {
   const wrapRef = useRef<HTMLDivElement>(null);
   const videoRef = useRef<HTMLVideoElement>(null);
@@ -77,8 +90,54 @@ export function SmartVideo({
     return () => document.removeEventListener("visibilitychange", onVisibility);
   }, []);
 
+  // Reflect controlled mute onto the element (React's `muted` attr alone is
+  // unreliable). Unmuting is triggered by a click, so the audio is allowed.
+  useEffect(() => {
+    if (videoRef.current) videoRef.current.muted = muted;
+  }, [muted, load]);
+
+  const fitClass = fit === "contain" ? "object-contain" : "object-cover";
+
   return (
-    <div ref={wrapRef} className={cn("relative overflow-hidden bg-raised", className)}>
+    <div
+      ref={wrapRef}
+      className={cn("relative overflow-hidden", blurBackdrop ? "bg-base" : "bg-raised", className)}
+    >
+      {/* Blurred, scaled full-bleed backdrop so a contained clip still covers the
+          whole box. Static blurred poster first; the live blurred video fades
+          in over it once loaded (same file — one fetch, decoded twice). */}
+      {blurBackdrop && (
+        <>
+          <SmartImage
+            src={poster}
+            alt=""
+            fill
+            sizes={posterSizes}
+            priority={priority}
+            aria-hidden
+            className="scale-125 object-cover blur-2xl brightness-[0.55]"
+          />
+          {load && !reduced && (
+            <video
+              muted
+              loop
+              playsInline
+              autoPlay
+              preload="none"
+              aria-hidden="true"
+              className={cn(
+                "absolute inset-0 h-full w-full scale-125 object-cover blur-2xl brightness-[0.55] transition-opacity duration-700 ease-out",
+                ready ? "opacity-100" : "opacity-0",
+              )}
+            >
+              {sources.map((s) => (
+                <source key={`bg-${s.src}`} src={s.src} type={s.type} />
+              ))}
+            </video>
+          )}
+        </>
+      )}
+
       <SmartImage
         src={poster}
         alt={alt}
@@ -86,6 +145,7 @@ export function SmartVideo({
         sizes={posterSizes}
         priority={priority}
         className={cn(
+          fitClass,
           "transition-opacity duration-700 ease-out",
           ready ? "opacity-0" : "opacity-100",
         )}
@@ -93,7 +153,7 @@ export function SmartVideo({
       {load && !reduced && (
         <video
           ref={videoRef}
-          muted
+          muted={muted}
           loop
           playsInline
           autoPlay
@@ -103,7 +163,8 @@ export function SmartVideo({
           onPlaying={() => setReady(true)}
           onCanPlay={() => videoRef.current?.play().catch(() => {})}
           className={cn(
-            "absolute inset-0 h-full w-full object-cover transition-opacity duration-700 ease-out",
+            "absolute inset-0 h-full w-full transition-opacity duration-700 ease-out",
+            fitClass,
             ready ? "opacity-100" : "opacity-0",
           )}
         >

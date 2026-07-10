@@ -31,7 +31,7 @@ export function TrackSpec({ className }: { className?: string }) {
       <span className="text-faint" aria-hidden>
         &middot;
       </span>
-      <span className="uppercase tracking-widest text-primary">Asian House</span>
+      <span className="uppercase tracking-widest text-primary">Asian House Production</span>
     </div>
   );
 }

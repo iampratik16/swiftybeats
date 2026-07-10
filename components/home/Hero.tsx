@@ -1,5 +1,6 @@
 "use client";
 
+import { useState } from "react";
 import { motion } from "framer-motion";
 import { SmartVideo } from "@/components/media/SmartVideo";
 import { MagneticButton } from "@/components/ui/MagneticButton";
@@ -15,21 +16,34 @@ import { socials } from "@/lib/links";
  * bottom-left over a gradient plinth. Text-shadows keep it crisp. Muted until pressed.
  */
 export function Hero({ hasVideo = false }: { hasVideo?: boolean }) {
+  // Starts muted so it autoplays everywhere (incl. mobile); the button unmutes.
+  const [muted, setMuted] = useState(true);
+
   return (
-    <section className="relative isolate flex min-h-[100svh] flex-col justify-end overflow-hidden px-6 pb-20 pt-32 md:px-10 md:pb-24 lg:px-14">
+    <section
+      // Click anywhere on the hero to unmute the video (mute button re-mutes).
+      onClick={hasVideo ? () => setMuted(false) : undefined}
+      className="relative isolate flex min-h-[100svh] flex-col justify-end overflow-hidden px-6 pb-20 pt-32 md:px-10 md:pb-24 lg:px-14"
+    >
       <div className="absolute inset-0 -z-10">
         {hasVideo && (
+          // Full-bleed: the complete frame plays sharp and uncropped in the
+          // centre while a blurred, scaled copy fills the rest — every pixel is
+          // video, nothing is cut off, no black bars.
           <SmartVideo
             priority
+            fit="contain"
+            blurBackdrop
+            muted={muted}
             sources={[
               // Versioned filenames: new content -> new URL, so the immutable
               // /assets cache never serves a stale hero to returning visitors.
-              { src: "/assets/hero/hero-loop-v5.webm", type: "video/webm" },
-              { src: "/assets/hero/hero-loop-v5.mp4", type: "video/mp4" },
+              { src: "/assets/hero/hero-loop-v7.webm", type: "video/webm" },
+              { src: "/assets/hero/hero-loop-v7.mp4", type: "video/mp4" },
             ]}
-            poster="/assets/hero/hero-poster-v5.jpg"
-            alt="A producer at a studio setup, hands on a pad controller in warm gold and violet light"
-            className="h-full w-full opacity-95"
+            poster="/assets/hero/hero-poster-v7.jpg"
+            alt="Swifty Beats producing in the studio, neon-lit, hands on the keys and pads"
+            className="h-full w-full"
           />
         )}
         {/* Editorial plinth: strong gradient rising from the bottom-left seats the
@@ -58,7 +72,7 @@ export function Hero({ hasVideo = false }: { hasVideo?: boolean }) {
           transition={{ delay: 0.8, duration: 1 }}
           className="mt-6 max-w-lg text-balance text-lg text-primary/85 [text-shadow:0_1px_24px_rgba(0,0,0,0.8)]"
         >
-          South Asian percussion, built for the dancefloor. Dhol heritage fused
+          Asian House Production, built for the dancefloor. Dhol heritage fused
           with house and electronic production.
         </motion.p>
 
@@ -113,12 +127,30 @@ export function Hero({ hasVideo = false }: { hasVideo?: boolean }) {
         </motion.div>
       </div>
 
-      {/* Scroll cue, bottom-right so it never crowds the type */}
+      {/* Mute / unmute for the hero video, bottom-right (all devices). */}
+      {hasVideo && (
+        <motion.button
+          type="button"
+          onClick={(e) => {
+            e.stopPropagation(); // don't let the section's unmute handler fire
+            setMuted((m) => !m);
+          }}
+          aria-label={muted ? "Unmute video" : "Mute video"}
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ delay: 1.2, duration: 0.8 }}
+          className="glass absolute bottom-6 right-6 z-20 flex h-11 w-11 items-center justify-center rounded-full text-primary transition-colors hover:text-gold"
+        >
+          {muted ? <MutedIcon /> : <SoundIcon />}
+        </motion.button>
+      )}
+
+      {/* Scroll cue, bottom-centre so it never crowds the mute control */}
       <motion.div
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ delay: 1.4, duration: 1 }}
-        className="absolute bottom-8 right-8 hidden md:block"
+        className="absolute bottom-8 left-1/2 hidden -translate-x-1/2 md:block"
         aria-hidden
       >
         <span className="flex flex-col items-center gap-2 text-faint">
@@ -137,6 +169,24 @@ export function Hero({ hasVideo = false }: { hasVideo?: boolean }) {
         </span>
       </motion.div>
     </section>
+  );
+}
+
+function MutedIcon() {
+  return (
+    <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" aria-hidden>
+      <path d="M11 5 6 9H3v6h3l5 4V5Z" />
+      <path d="m22 9-6 6M16 9l6 6" />
+    </svg>
+  );
+}
+
+function SoundIcon() {
+  return (
+    <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" aria-hidden>
+      <path d="M11 5 6 9H3v6h3l5 4V5Z" />
+      <path d="M16 9a3 3 0 0 1 0 6M19 6a7 7 0 0 1 0 12" />
+    </svg>
   );
 }
 

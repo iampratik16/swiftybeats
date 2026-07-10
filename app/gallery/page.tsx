@@ -11,16 +11,16 @@ export const metadata: Metadata = {
     "Posts and reels from Swifty Beats' Instagram — studio, live and behind the scenes. Asian House Production on and off the stage.",
 };
 
-// Client-selected posts, shown via Instagram's embed. Exception: Ma Penzi's
-// embed only offers "Watch on Instagram" (Instagram blocks inline playback for
-// that reel — licensed music), so it's self-hosted to play inline like the
-// rest. Add or reorder here.
+// Video posts are self-hosted so they play INLINE on the site — Instagram's
+// embed cannot play video inline on mobile browsers at all (and blocks it for
+// some reels even on desktop). Photo posts keep the tokenless Instagram embed
+// (images display fine everywhere). Add or reorder here.
 const posts: GalleryItem[] = [
   { type: "video", src: "/assets/gallery/DNbs7qasncP.mp4", poster: "/assets/gallery/DNbs7qasncP.jpg", permalink: "https://www.instagram.com/reel/DNbs7qasncP/" },
   { type: "embed", permalink: "https://www.instagram.com/p/DILYJA_MesS/" },
   { type: "embed", permalink: "https://www.instagram.com/p/DHrNmd-MmZI/" },
-  { type: "embed", permalink: "https://www.instagram.com/p/DHmD7e1MqqI/" },
-  { type: "embed", permalink: "https://www.instagram.com/reel/DRxojevCik3/" },
+  { type: "video", src: "/assets/gallery/DHmD7e1MqqI.mp4", poster: "/assets/gallery/DHmD7e1MqqI.jpg", permalink: "https://www.instagram.com/p/DHmD7e1MqqI/" },
+  { type: "video", src: "/assets/gallery/DRxojevCik3.mp4", poster: "/assets/gallery/DRxojevCik3.jpg", permalink: "https://www.instagram.com/reel/DRxojevCik3/" },
   { type: "embed", permalink: "https://www.instagram.com/p/DR6pckFCgur/" },
 ];
 

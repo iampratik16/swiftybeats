@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { InstagramEmbeds } from "@/components/gallery/InstagramEmbeds";
+import { Gallery, type GalleryItem } from "@/components/gallery/InstagramEmbeds";
 import { SplitText } from "@/components/ui/SplitText";
 import { Waveband } from "@/components/ui/Waveband";
 import { socials, HANDLE } from "@/lib/links";
@@ -11,14 +11,16 @@ export const metadata: Metadata = {
     "Posts and reels from Swifty Beats' Instagram — studio, live and behind the scenes. Asian House Production on and off the stage.",
 };
 
-// The specific posts/reels to feature (client-selected). Add or reorder here.
-const posts = [
-  "https://www.instagram.com/reel/DNbs7qasncP/",
-  "https://www.instagram.com/p/DILYJA_MesS/",
-  "https://www.instagram.com/p/DHrNmd-MmZI/",
-  "https://www.instagram.com/p/DHmD7e1MqqI/",
-  "https://www.instagram.com/reel/DRxojevCik3/",
-  "https://www.instagram.com/p/DR6pckFCgur/",
+// Client-selected posts. Video posts are self-hosted so they play inline on
+// the site (Instagram's embed can't play video inline, esp. on mobile); photo
+// posts use the tokenless Instagram embed. Add or reorder here.
+const posts: GalleryItem[] = [
+  { type: "video", src: "/assets/gallery/DNbs7qasncP.mp4", poster: "/assets/gallery/DNbs7qasncP.jpg", permalink: "https://www.instagram.com/reel/DNbs7qasncP/" },
+  { type: "embed", permalink: "https://www.instagram.com/p/DILYJA_MesS/" },
+  { type: "embed", permalink: "https://www.instagram.com/p/DHrNmd-MmZI/" },
+  { type: "video", src: "/assets/gallery/DHmD7e1MqqI.mp4", poster: "/assets/gallery/DHmD7e1MqqI.jpg", permalink: "https://www.instagram.com/p/DHmD7e1MqqI/" },
+  { type: "video", src: "/assets/gallery/DRxojevCik3.mp4", poster: "/assets/gallery/DRxojevCik3.jpg", permalink: "https://www.instagram.com/reel/DRxojevCik3/" },
+  { type: "embed", permalink: "https://www.instagram.com/p/DR6pckFCgur/" },
 ];
 
 export default function GalleryPage() {
@@ -49,7 +51,7 @@ export default function GalleryPage() {
           Follow {HANDLE} on Instagram
         </a>
       </header>
-      <InstagramEmbeds urls={posts} />
+      <Gallery items={posts} />
     </div>
   );
 }

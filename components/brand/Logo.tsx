@@ -20,10 +20,12 @@ export function Logo({
 }) {
   return (
     <svg
-      viewBox="0 0 200 92"
+      // viewBox is padded on X (-10..210) so the wide "SWIFTY" (which renders
+      // ~-5..207) is never clipped by the SVG's default overflow:hidden.
+      viewBox="-10 0 220 92"
       // Intrinsic size so it never balloons to full width before CSS applies
       // (dev FOUC / slow style load). Height classes override this once styled.
-      width={200}
+      width={220}
       height={92}
       role="img"
       aria-label="Swifty Beats"

@@ -81,10 +81,12 @@ export function Hero({ hasVideo = false }: { hasVideo?: boolean }) {
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ delay: 0.8, duration: 1 }}
-          className="mt-6 max-w-lg text-balance text-lg text-primary/85 [text-shadow:0_1px_24px_rgba(0,0,0,0.8)]"
+          className="mt-6 max-w-none text-pretty text-lg leading-relaxed text-primary/85 [text-shadow:0_1px_24px_rgba(0,0,0,0.8)] [&_br]:hidden sm:[&_br]:block sm:whitespace-nowrap"
         >
-          Asian House music built for the dancefloor. South Asian percussion and
-          dhol heritage fused with house and electronic production.
+          Asian House music built for the dancefloor.
+          <br />
+          South Asian percussion and dhol heritage fused with house and
+          electronic production.
         </motion.p>
 
         {/* Live multicolour waveform beat-signal — pure CSS, breathes on staggered delays */}

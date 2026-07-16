@@ -1,6 +1,5 @@
 import type { Metadata } from "next";
 import { SmartImage } from "@/components/media/SmartImage";
-import { MagneticButton } from "@/components/ui/MagneticButton";
 import { SplitText } from "@/components/ui/SplitText";
 import { Reveal } from "@/components/ui/Reveal";
 import { Waveband } from "@/components/ui/Waveband";
@@ -128,16 +127,6 @@ export default function AboutPage() {
             </span>
           </div>
         ))}
-      </section>
-
-      {/* CTA */}
-      <section className="mx-auto mt-24 flex max-w-6xl flex-wrap items-center gap-4 px-6">
-        <MagneticButton href="/booking" cursorLabel="book">
-          Book Swifty
-        </MagneticButton>
-        <MagneticButton href="/press" variant="glass" cursorLabel="view">
-          Press and EPK
-        </MagneticButton>
       </section>
     </div>
   );

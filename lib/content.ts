@@ -1,5 +1,6 @@
 import { z } from "zod";
-import { socials } from "./links";
+import { socials, spotify } from "./links";
+import { features } from "./features";
 
 /**
  * Typed local content, validated with Zod at module load (brief §5).
@@ -26,7 +27,7 @@ export const timeline = z.array(TimelineEvent).parse([
     marker: "DHOL",
     label: "Dhol",
     title: "It starts on the dhol",
-    body: "Rhythm before melody, discipline before everything. Loud, heavy, built for the crowd, the drum sets a lifelong pull between the intimate and the enormous.",
+    body: "Rhythm before melody, discipline before everything else. Loud, heavy, built for the crowd. The instrument that shapes everything he makes.",
     image: "/assets/generated/era-dhol.avif",
   },
   {
@@ -61,6 +62,14 @@ export const timeline = z.array(TimelineEvent).parse([
     body: "A catalogue of remixes, bootlegs and originals passes five million streams, built without a label pushing it.",
     image: "/assets/generated/era-streams.avif",
   },
+  {
+    id: "now",
+    marker: "NEW",
+    label: "Asian House Volume 1",
+    title: "Now",
+    body: "The next chapter: an EP built the same way it started, dhol and South Asian rhythm at the centre, house production doing the rest. Lead single 'Let Me Go' out 31 July.",
+    image: "/assets/generated/era-studio.avif",
+  },
 ]);
 
 /* ------------------------- Credentials marquee -------------------------- */
@@ -90,6 +99,8 @@ export const musicPlatforms = z.array(MusicPlatform).parse([
   { id: "spotify", name: "Spotify", role: "Singles and originals", href: socials.spotify },
   { id: "soundcloud", name: "SoundCloud", role: "Remixes and bootlegs", href: socials.soundcloud },
   { id: "youtube", name: "YouTube", role: "Videos and visuals", href: socials.youtube },
+  { id: "appleMusic", name: "Apple Music", role: "Singles and originals", href: socials.appleMusic },
+  { id: "amazonMusic", name: "Amazon Music", role: "Singles and originals", href: socials.amazonMusic },
 ]);
 
 /* ------------------------------ Releases -------------------------------- */
@@ -100,11 +111,26 @@ const Release = z.object({
   title: z.string(),
   type: z.string(),
   cover: z.url(),
-  href: z.url(),
+  // Optional: a release with no confirmed link renders non-clickable rather
+  // than shipping a broken/wrong link (see Ma Penzi).
+  href: z.url().optional(),
 });
 export type Release = z.infer<typeof Release>;
 
 export const releases = z.array(Release).parse([
+  // 'Let Me Go' — added at the top of the list on release day via the flag.
+  ...(features.letMeGoLive && process.env.NEXT_PUBLIC_LET_ME_GO_SPOTIFY_URL
+    ? [
+        {
+          id: "let-me-go",
+          title: "Let Me Go",
+          type: "Single",
+          // TODO(client-asset:let-me-go-artwork): add release artwork
+          cover: spotify.featured.cover,
+          href: process.env.NEXT_PUBLIC_LET_ME_GO_SPOTIFY_URL,
+        },
+      ]
+    : []),
   {
     id: "freedom",
     title: "Freedom",
@@ -117,7 +143,9 @@ export const releases = z.array(Release).parse([
     title: "Ma Penzi",
     type: "Single",
     cover: "https://i.scdn.co/image/ab67616d0000b273534e0af82fccf47abd8fb10d",
-    href: "https://open.spotify.com/artist/6wmOEv1HDNNQadm7KoxsOU",
+    // TODO(client-verify:ma-penzi-url): confirmed track URL needed from Supreme
+    // Music Group (previously pointed at the artist profile, not the track).
+    // Card renders non-clickable while href is absent.
   },
 ]);
 

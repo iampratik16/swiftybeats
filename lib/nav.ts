@@ -6,7 +6,7 @@ export const primaryNav: NavItem[] = [
   { href: "/music", label: "Music" },
   { href: "/shows", label: "Shows" },
   { href: "/gallery", label: "Gallery" },
-  { href: "/press", label: "Press" },
+  { href: "/press", label: "PR" },
   { href: "/contact", label: "Contact" },
 ];
 
@@ -15,4 +15,6 @@ export const footerNav: NavItem[] = [
   { href: "/booking", label: "Booking" },
   { href: "/shop", label: "Shop" },
   { href: "/news", label: "News" },
+  // Hidden from the main nav; industry-only EPK / press kit.
+  { href: "/epk", label: "Press Kit" },
 ];

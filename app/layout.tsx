@@ -22,6 +22,8 @@ export const metadata: Metadata = {
     "Asian House Production",
     "Asian House producer",
     "Asian House DJ",
+    "Let Me Go",
+    "Asian House Volume 1",
     "UK DJ",
     "house music",
     "dhol",

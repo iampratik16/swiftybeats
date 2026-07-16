@@ -36,25 +36,25 @@ export function MusicStrip() {
         </p>
       </header>
 
-      <div className="grid gap-5 md:grid-cols-3">
+      <div className="grid grid-cols-2 gap-4 sm:grid-cols-3 lg:grid-cols-5">
         {musicPlatforms.map((platform, i) => {
           const Icon = socialIcons[platform.id as keyof typeof socialIcons];
           return (
-            <Reveal key={platform.id} delay={i * 0.08}>
+            <Reveal key={platform.id} delay={i * 0.06}>
               <a
                 href={platform.href}
                 target="_blank"
                 rel="noopener noreferrer"
                 data-cursor="visit"
-                className="group block h-56 transition-transform duration-500 hover:-translate-y-1"
+                className="group block h-40 transition-transform duration-500 hover:-translate-y-1"
               >
-                <BorderGlow alwaysOn borderRadius={24} glowRadius={24} backgroundColor="#1d1512" className="h-full">
-                  <div className="flex h-full flex-col justify-between p-7">
+                <BorderGlow alwaysOn borderRadius={20} glowRadius={20} backgroundColor="#1d1512" className="h-full">
+                  <div className="flex h-full flex-col justify-between p-5">
                     <div className="flex items-center justify-between">
                       {Icon ? (
                         <Icon
                           className={cn(
-                            "h-8 w-8 text-primary transition-colors duration-500",
+                            "h-9 w-9 text-primary transition-colors duration-500",
                             ACCENT[i % ACCENT.length],
                           )}
                         />
@@ -68,10 +68,7 @@ export function MusicStrip() {
                         <ArrowUpRight />
                       </span>
                     </div>
-                    <div>
-                      <h3 className="text-title font-medium">{platform.name}</h3>
-                      <p className="mt-1 text-sm text-muted">{platform.role}</p>
-                    </div>
+                    <h3 className="font-display text-lg font-medium">{platform.name}</h3>
                   </div>
                 </BorderGlow>
               </a>

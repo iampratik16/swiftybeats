@@ -20,6 +20,11 @@ export const management = {
   email: "info@suprememusic.group",
 } as const;
 
+/** Supreme Music Group's own socials (distinct from Swifty's). */
+export const smgSocials = {
+  instagram: "https://instagram.com/suprememusicgroupuk",
+} as const;
+
 export const contact = {
   bookings: management.email,
   press: management.email,
@@ -34,7 +39,8 @@ export const socials = {
   youtube: "https://youtube.com/@SwiftyBeatsOfficial",
   instagram: "https://instagram.com/swiftybeats",
   tiktok: "https://www.tiktok.com/@swiftybeats",
-  appleMusic: "https://music.apple.com/artist/PLACEHOLDER",
+  appleMusic: "https://music.apple.com/us/artist/swifty-beats/1116433471",
+  amazonMusic: "https://music.amazon.com/artists/B01G003A5K/swifty-beats",
 } as const;
 
 export type SocialKey = keyof typeof socials;
@@ -67,5 +73,7 @@ export const audio = {
 } as const;
 
 export const media = {
-  youtubeFeaturedId: "IiF49B_iAnw", // from his channel — TODO(client) confirm
+  // Real video ID (from his channel), so the Watch embed is not a dead link.
+  // TODO(client-verify:youtube-target): confirm intended video or channel URL with Supreme Music Group
+  youtubeFeaturedId: "IiF49B_iAnw",
 } as const;

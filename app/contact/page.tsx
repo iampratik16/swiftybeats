@@ -1,9 +1,11 @@
 import type { Metadata } from "next";
+import Image from "next/image";
 import { ContactForm } from "@/components/contact/ContactForm";
 import { SplitText } from "@/components/ui/SplitText";
 import { Waveband } from "@/components/ui/Waveband";
 import { SocialLinks } from "@/components/shell/SocialLinks";
-import { management } from "@/lib/links";
+import { InstagramIcon } from "@/components/brand/SocialIcons";
+import { management, smgSocials } from "@/lib/links";
 
 export const metadata: Metadata = {
   title: "Contact",
@@ -30,23 +32,46 @@ export default function ContactPage() {
       </header>
 
       <div className="mt-14 grid gap-12 lg:grid-cols-[0.85fr_1.15fr] lg:gap-16">
-        {/* Management details */}
-        <div className="flex flex-col gap-8">
+        {/* Management + artist details, split into two clear blocks */}
+        <div className="flex flex-col gap-10">
+          {/* Supreme Music Group */}
           <div>
-            <p className="text-eyebrow uppercase text-faint">Management</p>
-            <p className="mt-3 font-display text-2xl font-medium text-primary">
-              {management.name}
-            </p>
+            <Image
+              src="/assets/brand/smg-logo.jpeg"
+              alt="Supreme Music Group"
+              width={220}
+              height={110}
+              // JPEG has a black background; screen blend drops it so the mark
+              // sinks into the dark site instead of sitting in a box.
+              className="h-auto w-44 mix-blend-screen"
+            />
+            <p className="mt-4 font-display text-xl font-medium text-primary">{management.name}</p>
             <a
               href={`mailto:${management.email}`}
               data-cursor="email"
-              className="mt-2 inline-block text-muted transition-colors hover:text-gold"
+              className="mt-1 inline-block text-muted transition-colors hover:text-gold"
             >
               {management.email}
             </a>
+            <ul className="mt-4 flex items-center gap-5">
+              <li>
+                <a
+                  href={smgSocials.instagram}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  aria-label="Supreme Music Group on Instagram"
+                  data-cursor="visit"
+                  className="block text-muted transition-colors duration-300 hover:text-gold"
+                >
+                  <InstagramIcon className="h-7 w-7" />
+                </a>
+              </li>
+            </ul>
           </div>
+
+          {/* Swifty Beats */}
           <div>
-            <p className="text-eyebrow uppercase text-faint">Follow</p>
+            <p className="text-eyebrow uppercase text-faint">Swifty Beats</p>
             <SocialLinks className="mt-4 gap-6" iconClassName="h-7 w-7" />
           </div>
         </div>

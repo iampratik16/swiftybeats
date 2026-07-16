@@ -1,11 +1,13 @@
 "use client";
 
+import Image from "next/image";
 import { useState } from "react";
 import { motion } from "framer-motion";
 import { SmartVideo } from "@/components/media/SmartVideo";
 import { MagneticButton } from "@/components/ui/MagneticButton";
 import { SplitText } from "@/components/ui/SplitText";
 import { TrackSpec } from "@/components/ui/TrackSpec";
+import { socials } from "@/lib/links";
 
 /**
  * Flagship hero (brief §6.1). A high-quality Vertex/Veo loop IS the hero:
@@ -60,9 +62,19 @@ export function Hero({ hasVideo = false }: { hasVideo?: boolean }) {
           <TrackSpec className="[text-shadow:0_1px_20px_rgba(0,0,0,0.7)]" />
         </motion.div>
 
-        <h1 className="mt-6 font-display text-[clamp(3rem,11vw,9rem)] font-semibold leading-[0.9] tracking-[-0.04em] [text-shadow:0_2px_50px_rgba(0,0,0,0.6)]">
+        <h1 className="mt-6 font-display text-[clamp(2.75rem,9.5vw,7.5rem)] font-semibold leading-[0.9] tracking-[-0.04em] [text-shadow:0_2px_50px_rgba(0,0,0,0.6)]">
           <SplitText text="Swifty" delay={0.2} immediate />{" "}
           <SplitText text="Beats" delay={0.34} immediate className="accent font-normal text-jewel" />
+          {/* Small logo mark, inline after the word */}
+          <Image
+            src="/assets/brand/logo.png"
+            alt=""
+            width={462}
+            height={234}
+            priority
+            aria-hidden
+            className="ml-4 inline-block h-[0.34em] w-auto align-[0.14em] [filter:drop-shadow(0_2px_20px_rgba(0,0,0,0.6))]"
+          />
         </h1>
 
         <motion.p
@@ -71,8 +83,8 @@ export function Hero({ hasVideo = false }: { hasVideo?: boolean }) {
           transition={{ delay: 0.8, duration: 1 }}
           className="mt-6 max-w-lg text-balance text-lg text-primary/85 [text-shadow:0_1px_24px_rgba(0,0,0,0.8)]"
         >
-          Asian House Production, built for the dancefloor. Dhol heritage fused
-          with house and electronic production.
+          Asian House music built for the dancefloor. South Asian percussion and
+          dhol heritage fused with house and electronic production.
         </motion.p>
 
         {/* Live multicolour waveform beat-signal — pure CSS, breathes on staggered delays */}
@@ -107,8 +119,11 @@ export function Hero({ hasVideo = false }: { hasVideo?: boolean }) {
           transition={{ delay: 0.55, duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
           className="mt-9 flex flex-wrap items-center gap-4"
         >
-          <MagneticButton href="/booking" cursorLabel="book">
-            Book Swifty
+          <MagneticButton href={socials.spotify} cursorLabel="listen" ariaLabel="Listen on Spotify">
+            <svg viewBox="0 0 24 24" width="14" height="14" fill="currentColor" aria-hidden>
+              <path d="M8 5v14l11-7z" />
+            </svg>
+            Listen on Spotify
           </MagneticButton>
         </motion.div>
       </div>

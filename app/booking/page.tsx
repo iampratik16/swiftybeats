@@ -33,10 +33,12 @@ export default function BookingPage() {
         <div className="absolute inset-0 [background:linear-gradient(to_bottom,rgba(20,15,12,0.6)_0%,transparent_32%,transparent_58%,rgba(20,15,12,0.92)_100%)]" />
       </div>
 
+      {/* TODO(scope:booking-form): the actual enquiry form is out of scope for this copy pass.
+          Confirm build slot with Radlabs — bookings are on the revenue path to the £10k/month target. */}
       <PageIntro
         eyebrow="Booking"
         title="Book Swifty."
-        description="Clubs, festivals, private, corporate, wedding and brand collaborations. The full enquiry form, with dates, budget and event detail, lands here in the next release. Until then, email direct and we will reply fast."
+        description="Clubs, festivals, private, corporate, wedding and brand collaborations. The full enquiry form, with dates, budget and event detail, is coming soon. Until then, email direct and we'll reply fast."
       >
         <div className="flex flex-col gap-8">
           <div className="flex flex-wrap items-center gap-4">

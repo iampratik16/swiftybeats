@@ -55,7 +55,7 @@ export function FeaturedRelease() {
               bare
               type={spotify.featured.type}
               id={spotify.featured.id}
-              title={`Swifty Beats — ${spotify.featured.title}`}
+              title={`Swifty Beats: ${spotify.featured.title}`}
             />
           </BorderGlow>
         </Reveal>

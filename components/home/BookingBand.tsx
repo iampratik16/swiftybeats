@@ -38,7 +38,7 @@ export function BookingBand() {
           </h2>
           <p className="max-w-md text-muted">
             Clubs, festivals, private and brand events across the UK and beyond.
-            Tell us the date and the room, and we will take it from there.
+            Tell us the date and the room. We&apos;ll take it from there.
           </p>
           <div className="flex flex-wrap items-center gap-4">
             <MagneticButton href="/booking" cursorLabel="book">

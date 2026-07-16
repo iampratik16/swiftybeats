@@ -16,8 +16,9 @@ const socialRow = ["spotify", "soundcloud", "youtube", "instagram", "tiktok"] as
 export function Footer() {
   const year = new Date().getFullYear();
   return (
-    <footer className="cv-section relative border-t border-white/10 bg-base">
-      <div className="mx-auto max-w-7xl px-6 py-16 md:px-8">
+    <footer className="relative border-t border-white/10 bg-base">
+      {/* pb clears the fixed MiniPlayer bar so the bottom credit row stays visible */}
+      <div className="mx-auto max-w-7xl px-6 pb-28 pt-16 md:px-8">
         {/* CTA + newsletter */}
         <div className="grid gap-10 border-b border-white/10 pb-12 lg:grid-cols-2 lg:items-end">
           <div>
@@ -82,11 +83,22 @@ export function Footer() {
           </ul>
         </div>
 
-        <div className="mt-8 flex flex-col gap-1 text-xs text-faint md:flex-row md:items-center md:justify-between">
+        <div className="mt-8 flex flex-col gap-2 border-t border-white/10 pt-6 text-xs text-faint md:flex-row md:items-center md:justify-between">
           <p>
             © {year} {site.name}. Management: {management.name}.
           </p>
-          <p>{site.tagline}</p>
+          <p className="text-sm text-muted">
+            Designed by{" "}
+            <a
+              href="https://pinktreemedia.com/"
+              target="_blank"
+              rel="noopener noreferrer"
+              data-cursor="visit"
+              className="font-medium text-primary transition-colors hover:text-[#e987bb]"
+            >
+              Pink Tree Media
+            </a>
+          </p>
         </div>
       </div>
     </footer>

@@ -3,18 +3,18 @@ import { ComingSoon } from "@/components/ui/ComingSoon";
 import { management } from "@/lib/links";
 
 export const metadata: Metadata = {
-  title: "Press",
+  title: "PR",
   description:
-    "The Swifty Beats press kit and EPK are coming soon. For interviews, assets and press enquiries, contact Supreme Music Group.",
+    "The Swifty Beats press kit and EPK are coming soon. For interviews, assets and PR enquiries, contact Supreme Music Group.",
 };
 
 export default function PressPage() {
   return (
     <ComingSoon
-      eyebrow="Press"
-      description="The full press kit and EPK are on the way. For interviews, hi-res assets and press enquiries, reach management directly."
+      eyebrow="PR"
+      description="The full press kit and EPK are on the way. For interviews, hi-res assets and PR enquiries, reach management directly."
       primary={{
-        label: "Press enquiries",
+        label: "PR enquiries",
         href: `mailto:${management.email}`,
         cursorLabel: "email",
         ariaLabel: "Email press enquiries",

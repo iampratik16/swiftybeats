@@ -44,7 +44,7 @@ export function Nav() {
           )}
         >
           <Link href="/" aria-label="Swifty Beats, home" className="flex items-center">
-            <Logo className="h-6 md:h-7" priority sizes="140px" />
+            <Logo className="h-8 md:h-9" priority sizes="160px" />
           </Link>
 
           <div className="hidden items-center gap-9 md:flex">

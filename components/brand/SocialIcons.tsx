@@ -49,10 +49,28 @@ export function TikTokIcon({ className }: IconProps) {
   );
 }
 
+export function AppleMusicIcon({ className }: IconProps) {
+  return (
+    <svg viewBox="0 0 24 24" fill="currentColor" className={className} aria-hidden>
+      <path d="M17.4 4.05c0-.32-.17-.47-.48-.41l-8 1.6a.62.62 0 0 0-.52.64v9.06a2.75 2.75 0 1 0 1.5 2.46V9.16l6-1.2v5.38a2.75 2.75 0 1 0 1.5 2.46V4.05z" />
+    </svg>
+  );
+}
+
+export function AmazonMusicIcon({ className }: IconProps) {
+  return (
+    <svg viewBox="0 0 24 24" fill="currentColor" className={className} aria-hidden>
+      <path d="M12 1.8A10.2 10.2 0 1 0 22.2 12 10.2 10.2 0 0 0 12 1.8Zm3.3 5.55v5.7a2.35 2.35 0 1 1-1.3-2.11V9.12l-4 .88v4.6a2.35 2.35 0 1 1-1.3-2.1V8.45a.77.77 0 0 1 .61-.75l4.9-1.08a.77.77 0 0 1 .92.75z" />
+    </svg>
+  );
+}
+
 export const socialIcons = {
   spotify: SpotifyIcon,
   soundcloud: SoundCloudIcon,
   youtube: YouTubeIcon,
   instagram: InstagramIcon,
   tiktok: TikTokIcon,
+  appleMusic: AppleMusicIcon,
+  amazonMusic: AmazonMusicIcon,
 } as const;

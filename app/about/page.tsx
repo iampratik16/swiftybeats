@@ -64,9 +64,11 @@ export default function AboutPage() {
         <div className="space-y-6 text-lg leading-relaxed text-muted">
           <Reveal>
             <p>
-              The story starts young, on the dhol at seven. Loud, heavy, built
-              for the crowd, and a lifelong obsession with rhythm that runs under
-              everything Swifty makes.
+              It started as a dream, dhol in hand at a school assembly, seven
+              years old. That same instrument would go on to carry him to stages
+              worldwide. Loud, heavy, built for the crowd: the beginning of a
+              lifelong obsession with rhythm that runs through everything he
+              makes.
             </p>
           </Reveal>
           <Reveal delay={0.05}>
@@ -84,12 +86,24 @@ export default function AboutPage() {
               built without a label pushing it.
             </p>
           </Reveal>
+          <Reveal delay={0.15}>
+            <p>
+              That heritage is the foundation for what comes next. Asian House
+              Volume 1, the debut EP, keeps dhol and South Asian rhythm at the
+              centre while pushing the production further than ever. Lead single
+              &apos;Let Me Go&apos; lands 31 July.
+            </p>
+          </Reveal>
         </div>
 
         <Reveal className="mt-16" delay={0.05}>
           <blockquote className="border-l-2 border-gold pl-6 font-display text-title font-medium text-primary">
-            Very few artists own the space where dhol and South Asian percussion
-            meet contemporary house and electronic production. Swifty Beats does.
+            Very few artists occupy the space where dhol and South Asian
+            percussion meet contemporary house and electronic production. Swifty
+            Beats built a career there.
+            <cite className="mt-4 block text-eyebrow uppercase not-italic text-faint">
+              Supreme Music Group
+            </cite>
           </blockquote>
         </Reveal>
       </section>

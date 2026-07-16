@@ -31,7 +31,7 @@ export function OriginStory() {
             <SplitText text="From the dhol to the main stage." immediate />
           </h2>
         </div>
-        <span className="hidden shrink-0 text-sm text-faint md:block">Age 7 — now</span>
+        <span className="hidden shrink-0 text-sm text-faint md:block">Age 7 to now</span>
       </header>
 
       <div className="grid gap-10 lg:grid-cols-[1.15fr_0.85fr] lg:gap-16">

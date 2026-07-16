@@ -24,7 +24,7 @@ export default function ShowsPage() {
     return (
       <ComingSoon
         eyebrow="Shows"
-        description="No live dates are on sale right now. New shows, festivals and club nights land here first. For availability and holds, get in touch."
+        description="No live dates on sale right now. New shows, festivals and club nights land here first. For availability and holds, get in touch."
         primary={{ label: "Enquire to book", href: "/contact", cursorLabel: "book" }}
       />
     );

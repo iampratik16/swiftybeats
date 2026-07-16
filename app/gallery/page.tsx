@@ -8,7 +8,7 @@ import { socialIcons } from "@/components/brand/SocialIcons";
 export const metadata: Metadata = {
   title: "Gallery",
   description:
-    "Posts and reels from Swifty Beats' Instagram — studio, live and behind the scenes. Asian House Production on and off the stage.",
+    "Posts and reels from Swifty Beats' Instagram: studio, live and behind the scenes. Asian House Production on and off the stage.",
 };
 
 // Video posts are self-hosted so they play INLINE on the site — Instagram's

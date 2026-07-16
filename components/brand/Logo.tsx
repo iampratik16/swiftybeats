@@ -51,14 +51,14 @@ export function Logo({
       </text>
       <text
         x="100"
-        y="82"
+        y="83"
         textAnchor="middle"
-        fontSize="16.5"
-        fontWeight={500}
-        letterSpacing="13"
+        fontSize="20"
+        fontWeight={600}
+        letterSpacing="11"
         fill="currentColor"
         // The trailing letter-space pushes the visual centre right; nudge back.
-        dx="6.5"
+        dx="5.5"
       >
         BEATS
       </text>

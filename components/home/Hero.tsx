@@ -84,7 +84,7 @@ export function Hero({ hasVideo = false }: { hasVideo?: boolean }) {
           className="mt-6 max-w-none text-pretty text-lg leading-relaxed text-primary/85 [text-shadow:0_1px_24px_rgba(0,0,0,0.8)] [&_br]:hidden sm:[&_br]:block sm:whitespace-nowrap"
         >
           Asian House music built for the dancefloor.
-          <br />
+          <br />{" "}
           South Asian percussion and dhol heritage fused with house and
           electronic production.
         </motion.p>

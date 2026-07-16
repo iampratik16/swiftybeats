@@ -77,6 +77,16 @@ export const imagenAssets: ImagenAsset[] = [
     prompt:
       "Abstract streams of warm gold light particles flowing through dark space, motion and depth, cinematic, premium, minimal, no text, no people.",
   },
+  {
+    // "Now" card — Asian House Volume 1 (the debut EP). South Asian motifs
+    // dissolving into house/electronic light; forward-looking, distinct from
+    // the dhol macro and studio-desk shots above.
+    id: "era-volume1",
+    kind: "texture",
+    aspectRatio: "4:3",
+    prompt:
+      "Intricate golden South Asian paisley and geometric mehndi patterns dissolving into glowing electronic sound waveforms and house-music light trails, warm gold and deep violet over near-black, volumetric haze, subtle grain, cinematic, premium, abstract, no text, no people, no faces.",
+  },
 ];
 
 /** Veo hero loop (brief §9.2). Client-supplied prompt. "Vertical" generated as

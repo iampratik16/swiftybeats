@@ -68,7 +68,7 @@ export const timeline = z.array(TimelineEvent).parse([
     label: "Latest",
     title: "Asian House Volume 1",
     body: "The next chapter: an EP built the same way it started, dhol and South Asian rhythm at the centre, house production doing the rest. Lead single 'Let Me Go' out 31 July.",
-    image: "/assets/generated/era-studio.avif",
+    image: "/assets/generated/era-volume1.avif",
   },
 ]);
 

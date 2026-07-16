@@ -98,9 +98,9 @@ export default function AboutPage() {
 
         <Reveal className="mt-16" delay={0.05}>
           <blockquote className="border-l-2 border-gold pl-6 font-display text-title font-medium text-primary">
-            Very few artists occupy the space where dhol and South Asian
+            &ldquo;Very few artists occupy the space where dhol and South Asian
             percussion meet contemporary house and electronic production. Swifty
-            Beats built a career there.
+            Beats built a career there.&rdquo;
             <cite className="mt-4 block text-eyebrow uppercase not-italic text-faint">
               Supreme Music Group
             </cite>

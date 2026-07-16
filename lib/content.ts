@@ -64,9 +64,9 @@ export const timeline = z.array(TimelineEvent).parse([
   },
   {
     id: "now",
-    marker: "NEW",
-    label: "Asian House Volume 1",
-    title: "Now",
+    marker: "Now",
+    label: "Latest",
+    title: "Asian House Volume 1",
     body: "The next chapter: an EP built the same way it started, dhol and South Asian rhythm at the centre, house production doing the rest. Lead single 'Let Me Go' out 31 July.",
     image: "/assets/generated/era-studio.avif",
   },
@@ -143,9 +143,7 @@ export const releases = z.array(Release).parse([
     title: "Ma Penzi",
     type: "Single",
     cover: "https://i.scdn.co/image/ab67616d0000b273534e0af82fccf47abd8fb10d",
-    // TODO(client-verify:ma-penzi-url): confirmed track URL needed from Supreme
-    // Music Group (previously pointed at the artist profile, not the track).
-    // Card renders non-clickable while href is absent.
+    href: "https://open.spotify.com/album/5ZU38EeAJtTneF9v63osut",
   },
 ]);
 

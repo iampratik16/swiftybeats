@@ -36,7 +36,7 @@ export const timeline = z.array(TimelineEvent).parse([
     label: "P.D.S",
     title: "Pure Divine Sounds",
     body: "At fifteen he co-founds P.D.S, turning a bedroom obsession into a collective and a name that travels.",
-    image: "/assets/generated/era-studio.avif",
+    image: "/assets/generated/era-volume1.avif",
   },
   {
     id: "festivals",
@@ -68,7 +68,7 @@ export const timeline = z.array(TimelineEvent).parse([
     label: "Latest",
     title: "Asian House Volume 1",
     body: "The next chapter: an EP built the same way it started, dhol and South Asian rhythm at the centre, house production doing the rest. Lead single 'Let Me Go' out 31 July.",
-    image: "/assets/generated/era-volume1.avif",
+    image: "/assets/generated/era-studio.avif",
   },
 ]);
 

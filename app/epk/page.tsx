@@ -159,6 +159,8 @@ function ReleaseEPK({ release }: { release: EpkRelease }) {
 /** Links to a file-share (Dropbox etc.) when set, else falls back to an email request. */
 function AssetButton({ label, url, subject, variant = "gold" }: { label: string; url?: string; subject: string; variant?: "gold" | "glass" }) {
   const href = url ?? `mailto:${management.email}?subject=${encodeURIComponent(subject)}`;
+  // A local file (served from /public) downloads; an external link opens in a new tab.
+  const isLocalFile = url?.startsWith("/");
   const base =
     variant === "gold"
       ? "bg-gold text-ink hover:bg-gold-bright"
@@ -166,8 +168,9 @@ function AssetButton({ label, url, subject, variant = "gold" }: { label: string;
   return (
     <a
       href={href}
-      target={url ? "_blank" : undefined}
-      rel={url ? "noopener noreferrer" : undefined}
+      download={isLocalFile || undefined}
+      target={url && !isLocalFile ? "_blank" : undefined}
+      rel={url && !isLocalFile ? "noopener noreferrer" : undefined}
       data-cursor={url ? "visit" : "email"}
       className={`inline-flex items-center gap-2 rounded-full px-5 py-2.5 text-sm font-medium transition-colors ${base}`}
     >

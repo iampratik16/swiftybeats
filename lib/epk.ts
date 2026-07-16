@@ -54,7 +54,9 @@ export const epkReleases: EpkRelease[] = [
       { id: "soundcloud", label: "SoundCloud", href: socials.soundcloud },
     ],
     preview: { embedType: "album", embedId: "4ViV6MJIs3DZeLjS7QCMrf" },
-    downloadUrl: undefined, // TODO(client): Dropbox hi-res download link
-    assetsUrl: undefined, // TODO(client): Dropbox additional-assets link
+    // Real, self-hosted press kit (cover + press photos). Downloads on click.
+    // Swap for a Dropbox folder link once the client supplies audio/hi-res masters.
+    downloadUrl: "/assets/downloads/freedom-press-kit.zip",
+    assetsUrl: "/assets/downloads/freedom-press-kit.zip",
   },
 ];

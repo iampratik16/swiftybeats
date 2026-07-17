@@ -39,10 +39,10 @@ export function Hero({ hasVideo = false }: { hasVideo?: boolean }) {
             sources={[
               // Versioned filenames: new content -> new URL, so the immutable
               // /assets cache never serves a stale hero to returning visitors.
-              { src: "/assets/hero/hero-loop-v7.webm", type: "video/webm" },
-              { src: "/assets/hero/hero-loop-v7.mp4", type: "video/mp4" },
+              { src: "/assets/hero/hero-loop-v8.webm", type: "video/webm" },
+              { src: "/assets/hero/hero-loop-v8.mp4", type: "video/mp4" },
             ]}
-            poster="/assets/hero/hero-poster-v7.jpg"
+            poster="/assets/hero/hero-poster-v8.jpg"
             alt="Swifty Beats producing in the studio, neon-lit, hands on the keys and pads"
             className="h-full w-full"
           />

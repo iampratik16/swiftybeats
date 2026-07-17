@@ -9,7 +9,7 @@ import { BookingBand } from "@/components/home/BookingBand";
 
 export default function HomePage() {
   // Include the hero loop only if the asset exists (Veo Asian-House atmosphere).
-  const hasVideo = existsSync(join(process.cwd(), "public/assets/hero/hero-loop-v8.mp4"));
+  const hasVideo = existsSync(join(process.cwd(), "public/assets/hero/hero-loop-v9.mp4"));
 
   return (
     <>

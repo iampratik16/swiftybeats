@@ -17,32 +17,29 @@ import { socials } from "@/lib/links";
  * bottom-left over a gradient plinth. Text-shadows keep it crisp. Muted until pressed.
  */
 export function Hero({ hasVideo = false }: { hasVideo?: boolean }) {
-  // Starts muted so it autoplays everywhere (incl. mobile); the button unmutes.
+  // Muted so it autoplays everywhere (browsers block autoplay with sound); a
+  // click anywhere on the hero — or the button — unmutes so the audio plays.
   const [muted, setMuted] = useState(true);
 
   return (
     <section
-      // Click anywhere on the hero to unmute the video (mute button re-mutes).
       onClick={hasVideo ? () => setMuted(false) : undefined}
       className="relative isolate flex min-h-[100svh] flex-col justify-end overflow-hidden px-6 pb-20 pt-32 md:px-10 md:pb-24 lg:px-14"
     >
       <div className="absolute inset-0 -z-10">
         {hasVideo && (
-          // Full-bleed: the complete frame plays sharp and uncropped in the
-          // centre while a blurred, scaled copy fills the rest — every pixel is
-          // video, nothing is cut off, no black bars.
+          // Full-screen: the clip covers the entire hero, edge to edge.
           <SmartVideo
             priority
-            fit="contain"
-            blurBackdrop
+            fit="cover"
             muted={muted}
             sources={[
               // Versioned filenames: new content -> new URL, so the immutable
               // /assets cache never serves a stale hero to returning visitors.
-              { src: "/assets/hero/hero-loop-v8.webm", type: "video/webm" },
-              { src: "/assets/hero/hero-loop-v8.mp4", type: "video/mp4" },
+              { src: "/assets/hero/hero-loop-v9.webm", type: "video/webm" },
+              { src: "/assets/hero/hero-loop-v9.mp4", type: "video/mp4" },
             ]}
-            poster="/assets/hero/hero-poster-v8.jpg"
+            poster="/assets/hero/hero-poster-v9.jpg"
             alt="Swifty Beats producing in the studio, neon-lit, hands on the keys and pads"
             className="h-full w-full"
           />
@@ -135,7 +132,7 @@ export function Hero({ hasVideo = false }: { hasVideo?: boolean }) {
         <motion.button
           type="button"
           onClick={(e) => {
-            e.stopPropagation(); // don't let the section's unmute handler fire
+            e.stopPropagation(); // don't double-fire with the section handler
             setMuted((m) => !m);
           }}
           aria-label={muted ? "Unmute video" : "Mute video"}

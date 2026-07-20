@@ -17,7 +17,8 @@
   /* Warm cream type + warm muted greys */
   --color-primary: #f3eadc;
   --color-muted: #a89482;
-  --color-faint: #6f5f52;
+  /* Raised from #6f5f52 (~3.2:1, failed WCAG AA) to ~5.5:1 on the dark ground */
+  --color-faint: #98866f;
 
   /* Signature warm gold + jewel accents lifted from the artwork (Freedom /
      Ma Penzi): vermilion, teal, rose. These are the "funk" palette. */
@@ -278,14 +279,16 @@
   100% { transform: translateX(240%); }
 }
 /* Heading word reveal — CSS-driven so it plays at first paint, never waiting on
-   JS hydration. Opacity ONLY (no transform) so the word spans can stay `inline`:
-   inline elements never clip overflowing glyph ink, so descenders (g/y/p) render
-   in full. No overflow mask, no line-height hacks, spacing intact. */
+   JS hydration. TRANSFORM ONLY (no opacity): the word paints at full opacity on
+   the first frame, so it never gates LCP — Chrome skips opacity:0 elements, and
+   the old opacity fade was ~99% of the hero's LCP time. inline-block lets the
+   slide apply; no overflow mask, so descenders (g/y/p) still render in full. */
 @keyframes word-rise {
-  from { opacity: 0; }
-  to   { opacity: 1; }
+  from { transform: translateY(0.16em); }
+  to   { transform: translateY(0); }
 }
-.word-rise { animation: word-rise 0.7s ease both; }
+.word-rise { display: inline-block; animation: word-rise 0.6s cubic-bezier(0.16, 1, 0.3, 1) both; }
+@media (prefers-reduced-motion: reduce) { .word-rise { animation: none; } }
 /* Funk: waveform bars breathing on a beat */
 @keyframes wave-beat {
   0%, 100% { transform: scaleY(0.35); }

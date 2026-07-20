@@ -44,6 +44,9 @@ export default function MusicPage() {
               label: "Releases",
               content: (
                 <div className="flex flex-col gap-16">
+                  {/* sr-only section heading so the release-card h3s don't skip
+                      straight from the page h1 (valid heading outline). */}
+                  <h2 className="sr-only">Releases</h2>
                   <div className="grid grid-cols-2 gap-5 sm:grid-cols-3 lg:grid-cols-4">
                     {releases.map((release, i) => (
                       <Reveal key={release.id} delay={i * 0.06}>

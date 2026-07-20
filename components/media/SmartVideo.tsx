@@ -9,6 +9,8 @@ export type VideoSource = { src: string; type: string };
 type SmartVideoProps = {
   /** Ordered by preference, e.g. WebM before MP4 */
   sources: VideoSource[];
+  /** Lighter cut used below 768px (e.g. a 480p encode). Falls back to `sources`. */
+  mobileSources?: VideoSource[];
   poster: string;
   alt?: string;
   className?: string;
@@ -36,6 +38,7 @@ type SmartVideoProps = {
  */
 export function SmartVideo({
   sources,
+  mobileSources,
   poster,
   alt = "",
   className,
@@ -52,17 +55,44 @@ export function SmartVideo({
   const [load, setLoad] = useState(false);
   const [ready, setReady] = useState(false);
   const [reduced, setReduced] = useState(false);
+  // Phones load a lighter cut (mobileSources) rather than the full desktop clip.
+  const [small, setSmall] = useState(false);
+  const firedReady = useRef(false);
+
+  // Tell the Preloader the hero is visible so it can lift the curtain. Fired
+  // once — when the video starts playing (desktop) or when the poster paints
+  // (mobile / reduced-motion, where no video ever loads). priority hero only.
+  const signalReady = () => {
+    if (priority && !firedReady.current) {
+      firedReady.current = true;
+      (window as unknown as { __heroReady?: boolean }).__heroReady = true;
+      window.dispatchEvent(new Event("hero-ready"));
+    }
+  };
 
   useEffect(() => {
-    const mq = window.matchMedia("(prefers-reduced-motion: reduce)");
-    const sync = () => setReduced(mq.matches);
+    const motion = window.matchMedia("(prefers-reduced-motion: reduce)");
+    const width = window.matchMedia("(max-width: 767px)");
+    const sync = () => {
+      setReduced(motion.matches);
+      setSmall(width.matches);
+    };
     sync();
-    mq.addEventListener("change", sync);
-    return () => mq.removeEventListener("change", sync);
+    motion.addEventListener("change", sync);
+    width.addEventListener("change", sync);
+    return () => {
+      motion.removeEventListener("change", sync);
+      width.removeEventListener("change", sync);
+    };
   }, []);
 
+  // Reduced-motion users get the poster only; everyone else gets a video —
+  // phones the lighter mobileSources cut, desktop the full sources.
+  const skipVideo = reduced;
+  const activeSources = small && mobileSources ? mobileSources : sources;
+
   useEffect(() => {
-    if (reduced) return; // never fetch video for reduced-motion users
+    if (skipVideo) return; // no video for reduced-motion users
     const el = wrapRef.current;
     if (!el) return;
     const io = new IntersectionObserver(
@@ -79,7 +109,7 @@ export function SmartVideo({
     );
     io.observe(el);
     return () => io.disconnect();
-  }, [reduced, rootMargin]);
+  }, [skipVideo, rootMargin]);
 
   useEffect(() => {
     const onVisibility = () => {
@@ -117,7 +147,7 @@ export function SmartVideo({
             aria-hidden
             className="scale-125 object-cover blur-2xl brightness-[0.55]"
           />
-          {load && !reduced && (
+          {load && !skipVideo && (
             <video
               muted
               loop
@@ -130,7 +160,7 @@ export function SmartVideo({
                 ready ? "opacity-100" : "opacity-0",
               )}
             >
-              {sources.map((s) => (
+              {activeSources.map((s) => (
                 <source key={`bg-${s.src}`} src={s.src} type={s.type} />
               ))}
             </video>
@@ -144,13 +174,16 @@ export function SmartVideo({
         fill
         sizes={posterSizes}
         priority={priority}
+        // Reduced-motion: no video loads, so the poster IS the hero — signal
+        // the Preloader as soon as it paints.
+        onLoad={() => { if (skipVideo) signalReady(); }}
         className={cn(
           fitClass,
           "transition-opacity duration-700 ease-out",
           ready ? "opacity-0" : "opacity-100",
         )}
       />
-      {load && !reduced && (
+      {load && !skipVideo && (
         <video
           ref={videoRef}
           muted={muted}
@@ -158,9 +191,8 @@ export function SmartVideo({
           playsInline
           autoPlay
           preload="none"
-          poster={poster}
           aria-hidden="true"
-          onPlaying={() => setReady(true)}
+          onPlaying={() => { setReady(true); signalReady(); }}
           onCanPlay={() => videoRef.current?.play().catch(() => {})}
           className={cn(
             "absolute inset-0 h-full w-full transition-opacity duration-700 ease-out",
@@ -168,7 +200,7 @@ export function SmartVideo({
             ready ? "opacity-100" : "opacity-0",
           )}
         >
-          {sources.map((s) => (
+          {activeSources.map((s) => (
             <source key={s.src} src={s.src} type={s.type} />
           ))}
         </video>

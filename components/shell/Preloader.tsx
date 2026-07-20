@@ -30,7 +30,7 @@ export function Preloader() {
     document.body.style.overflow = "hidden";
 
     const start = performance.now();
-    const maxWait = reduced ? 400 : 2600;
+    const maxWait = reduced ? 400 : 1500;
     const minShow = reduced ? 150 : 550;
     let readyAt = 0;
     let raf = 0;
@@ -53,11 +53,18 @@ export function Preloader() {
       if (!readyAt) readyAt = performance.now();
     };
     const fonts = document.fonts?.ready ?? Promise.resolve();
+    // On the home page, reveal as soon as the HERO is visible — its video is
+    // playing (desktop) or its poster has painted (mobile) — NOT window.load,
+    // which waits for heavy third-party embeds (Spotify). On pages with no hero,
+    // fall back to window.load (fast there, nothing heavy). First one wins.
     const loaded =
       document.readyState === "complete"
         ? Promise.resolve()
         : new Promise<void>((r) => window.addEventListener("load", () => r(), { once: true }));
-    Promise.all([fonts, loaded]).then(markReady);
+    const heroReady = (window as unknown as { __heroReady?: boolean }).__heroReady
+      ? Promise.resolve()
+      : new Promise<void>((r) => window.addEventListener("hero-ready", () => r(), { once: true }));
+    Promise.all([fonts, Promise.race([heroReady, loaded])]).then(markReady);
     const cap = window.setTimeout(markReady, maxWait);
 
     return () => {
@@ -78,7 +85,7 @@ export function Preloader() {
           className="fixed inset-0 z-[120] flex flex-col items-center justify-center bg-base"
           initial={{ opacity: 1 }}
           exit={reduced ? { opacity: 0 } : { y: "-100%" }}
-          transition={{ duration: reduced ? 0.2 : 0.9, ease: [0.83, 0, 0.17, 1] }}
+          transition={{ duration: reduced ? 0.2 : 0.45, ease: [0.83, 0, 0.17, 1] }}
           aria-hidden
         >
           {/* Plain wrapper (no opacity gate): the wordmark is the loader itself,

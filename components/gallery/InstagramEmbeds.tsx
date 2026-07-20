@@ -27,7 +27,7 @@ export function Gallery({ items }: { items: GalleryItem[] }) {
     <div className="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3">
       {items.map((item, i) =>
         item.type === "video" ? (
-          <VideoItem key={item.permalink} src={item.src} poster={item.poster} permalink={item.permalink} eager={i < 2} />
+          <VideoItem key={item.permalink} src={item.src} poster={item.poster} permalink={item.permalink} eager={i < 2} priority={i === 0} />
         ) : (
           <InstaEmbed key={item.permalink} url={item.permalink} eager={i < 2} />
         ),
@@ -54,25 +54,25 @@ function useIsTouch() {
  * touch devices (phones/tablets) — where the embed can't play video inline —
  * get the self-hosted player. Shows the poster until the device is measured.
  */
-function VideoItem({ src, poster, permalink, eager }: { src: string; poster: string; permalink: string; eager: boolean }) {
+function VideoItem({ src, poster, permalink, eager, priority = false }: { src: string; poster: string; permalink: string; eager: boolean; priority?: boolean }) {
   const isTouch = useIsTouch();
 
   if (isTouch === null) {
     return (
       <div className={CARD}>
-        <SmartImage src={poster} alt="" fill sizes="(max-width:640px) 100vw, 33vw" className="object-cover" />
+        <SmartImage src={poster} alt="" fill sizes="(max-width:640px) 100vw, 33vw" priority={priority} className="object-cover" />
       </div>
     );
   }
   return isTouch ? (
-    <GalleryVideo src={src} poster={poster} permalink={permalink} />
+    <GalleryVideo src={src} poster={poster} permalink={permalink} priority={priority} />
   ) : (
     <InstaEmbed url={permalink} eager={eager} />
   );
 }
 
 /** Self-hosted clip: poster + play button, swaps to a playing <video> on tap. */
-function GalleryVideo({ src, poster, permalink }: { src: string; poster: string; permalink: string }) {
+function GalleryVideo({ src, poster, permalink, priority = false }: { src: string; poster: string; permalink: string; priority?: boolean }) {
   const [playing, setPlaying] = useState(false);
 
   return (
@@ -87,31 +87,36 @@ function GalleryVideo({ src, poster, permalink }: { src: string; poster: string;
           className="absolute inset-0 h-full w-full bg-black object-contain"
         />
       ) : (
-        <button
-          type="button"
-          onClick={() => setPlaying(true)}
-          aria-label="Play video"
-          className="group absolute inset-0 block"
-        >
-          <SmartImage src={poster} alt="" fill sizes="(max-width:640px) 100vw, 33vw" className="object-cover" />
-          <span className="absolute inset-0 grid place-items-center bg-black/25 transition-colors group-hover:bg-black/35">
-            <span className="flex h-16 w-16 items-center justify-center rounded-full bg-white/90 text-black shadow-lg transition-transform group-hover:scale-105">
-              <svg viewBox="0 0 24 24" width="26" height="26" fill="currentColor" aria-hidden>
-                <path d="M8 5v14l11-7z" />
-              </svg>
+        <>
+          {/* The button holds only the poster + play icon — no visible text — so
+              its accessible name ("Play video") can't mismatch. The Instagram
+              link is a SIBLING, not nested inside (an <a> inside a <button> is
+              invalid HTML and was the source of the label-mismatch warning). */}
+          <button
+            type="button"
+            onClick={() => setPlaying(true)}
+            aria-label="Play video"
+            className="group absolute inset-0 block"
+          >
+            <SmartImage src={poster} alt="" fill sizes="(max-width:640px) 100vw, 33vw" priority={priority} className="object-cover" />
+            <span className="absolute inset-0 grid place-items-center bg-black/25 transition-colors group-hover:bg-black/35">
+              <span className="flex h-16 w-16 items-center justify-center rounded-full bg-white/90 text-black shadow-lg transition-transform group-hover:scale-105">
+                <svg viewBox="0 0 24 24" width="26" height="26" fill="currentColor" aria-hidden>
+                  <path d="M8 5v14l11-7z" />
+                </svg>
+              </span>
             </span>
-          </span>
+          </button>
           <a
             href={permalink}
             target="_blank"
             rel="noopener noreferrer"
-            onClick={(e) => e.stopPropagation()}
-            className="absolute bottom-3 right-3 flex items-center gap-1.5 rounded-full bg-black/50 px-3 py-1.5 text-xs text-white backdrop-blur transition-colors hover:text-gold"
+            className="absolute bottom-3 right-3 z-10 flex items-center gap-1.5 rounded-full bg-black/50 px-3 py-1.5 text-xs text-white backdrop-blur transition-colors hover:text-gold"
           >
             <InstaGlyph className="h-3.5 w-3.5" />
             Instagram
           </a>
-        </button>
+        </>
       )}
     </div>
   );

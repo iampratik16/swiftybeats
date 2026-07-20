@@ -47,10 +47,10 @@ export function AudioProvider({ children }: { children: React.ReactNode }) {
 
   useEffect(() => {
     const el = new Audio();
-    el.src = audioLinks.featuredLoop;
     el.loop = true;
-    el.preload = "metadata";
-    el.crossOrigin = "anonymous";
+    el.crossOrigin = "anonymous"; // must be set before src (CORS)
+    // src is set on first play (toggle), not here — so a missing/hosted loop
+    // never 404s on every page load; it only fetches when the user hits play.
     const onReady = () => setReady(true);
     const onError = () => setStatus("unavailable");
     const onEnded = () => setStatus("paused");
@@ -94,6 +94,7 @@ export function AudioProvider({ children }: { children: React.ReactNode }) {
       pause();
       return;
     }
+    if (!el.src) el.src = audioLinks.featuredLoop; // load on demand, first play only
     buildGraph();
     void ctxRef.current?.resume();
     el.play().then(

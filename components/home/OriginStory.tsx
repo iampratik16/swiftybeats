@@ -15,7 +15,11 @@ import { cn } from "@/lib/utils";
 // Each era gets its own jewel colour, cycled from the artwork palette — the
 // timeline reads as a spectrum rather than a wall of gold.
 const ACCENTS = ["text-gold", "text-rose", "text-teal", "text-vermilion", "text-gold-bright", "text-teal"];
-const ACCENTS_DIM = ["text-gold/40", "text-rose/40", "text-teal/40", "text-vermilion/40", "text-gold-bright/40", "text-teal/40"];
+// Inactive markers use a readable neutral, not 40%-opacity jewel tints — those
+// dropped to ~2-3:1 contrast (WCAG fail). The active/hovered marker still pops
+// in full accent colour (ACCENTS), so the colour coding is preserved where it
+// reads. Revert to the tinted version if the dim colour is worth the a11y hit.
+const ACCENTS_DIM = ACCENTS.map(() => "text-muted");
 
 export function OriginStory() {
   const [active, setActive] = useState(0);

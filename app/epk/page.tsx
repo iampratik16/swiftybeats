@@ -50,7 +50,7 @@ export default function EpkPage() {
         </div>
         <p className="mt-4 text-sm text-faint">
           Hi-res press photos available on request. Email{" "}
-          <a href={`mailto:${management.email}`} className="text-muted transition-colors hover:text-gold">
+          <a href={`mailto:${management.email}`} className="text-muted underline underline-offset-2 transition-colors hover:text-gold">
             {management.email}
           </a>
           .

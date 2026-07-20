@@ -9,6 +9,7 @@ export const fraunces = Fraunces({
   style: ["italic"],
   variable: "--font-fraunces",
   display: "swap",
+  preload: false, // below-the-fold italic accent — never in the hero, don't preload
   fallback: ["Georgia", "Times New Roman", "serif"],
 });
 
@@ -19,7 +20,7 @@ export const clashDisplay = localFont({
     { path: "../public/fonts/ClashDisplay-400.woff2", weight: "400", style: "normal" },
     { path: "../public/fonts/ClashDisplay-500.woff2", weight: "500", style: "normal" },
     { path: "../public/fonts/ClashDisplay-600.woff2", weight: "600", style: "normal" },
-    { path: "../public/fonts/ClashDisplay-700.woff2", weight: "700", style: "normal" },
+    // 700 dropped — no font-bold / <strong> / weight ≥700 usage anywhere
   ],
   variable: "--font-clash",
   display: "swap",
@@ -31,7 +32,7 @@ export const satoshi = localFont({
   src: [
     { path: "../public/fonts/Satoshi-400.woff2", weight: "400", style: "normal" },
     { path: "../public/fonts/Satoshi-500.woff2", weight: "500", style: "normal" },
-    { path: "../public/fonts/Satoshi-700.woff2", weight: "700", style: "normal" },
+    // 700 dropped — no font-bold / <strong> / weight ≥700 usage anywhere
   ],
   variable: "--font-satoshi",
   display: "swap",

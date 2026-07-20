@@ -17,7 +17,9 @@ export default function PressPage() {
         label: "PR enquiries",
         href: `mailto:${management.email}`,
         cursorLabel: "email",
-        ariaLabel: "Email press enquiries",
+        // Must contain the visible label ("PR enquiries") to avoid a
+        // label/accessible-name mismatch.
+        ariaLabel: "Email PR enquiries",
       }}
       footnote={
         <a

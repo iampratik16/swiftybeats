@@ -34,10 +34,16 @@ export function Hero({ hasVideo = false }: { hasVideo?: boolean }) {
             fit="cover"
             muted={muted}
             sources={[
-              // Versioned filenames: new content -> new URL, so the immutable
-              // /assets cache never serves a stale hero to returning visitors.
-              { src: "/assets/hero/hero-loop-v9.webm", type: "video/webm" },
-              { src: "/assets/hero/hero-loop-v9.mp4", type: "video/mp4" },
+              // Versioned filenames: new content/encode -> new URL, so the
+              // immutable /assets cache never serves a stale hero. v12 = the
+              // high-quality 720p desktop cut, WITH audio (unmute plays it).
+              { src: "/assets/hero/hero-loop-v12.webm", type: "video/webm" },
+              { src: "/assets/hero/hero-loop-v12.mp4", type: "video/mp4" },
+            ]}
+            mobileSources={[
+              // 480p cut for phones — a fraction of the desktop payload.
+              { src: "/assets/hero/hero-loop-v12-sm.webm", type: "video/webm" },
+              { src: "/assets/hero/hero-loop-v12-sm.mp4", type: "video/mp4" },
             ]}
             poster="/assets/hero/hero-poster-v9.jpg"
             alt="Swifty Beats producing in the studio, neon-lit, hands on the keys and pads"

@@ -36,7 +36,9 @@ export function SplitText({
   // waits on JS hydration (the heavy bundle delays that).
   if (immediate) {
     return (
-      <span className="inline" aria-label={text}>
+      <span className="inline">
+        {/* Screen readers get the whole phrase once; the animated word spans are aria-hidden */}
+        <span className="sr-only">{text}</span>
         {words.map((word, i) => (
           <span key={`${word}-${i}`} aria-hidden className="inline">
             <span
@@ -54,7 +56,9 @@ export function SplitText({
 
   // Scroll-triggered reveal keeps framer (needs viewport detection).
   return (
-    <span className="inline" aria-label={text}>
+    <span className="inline">
+      {/* Screen readers get the whole phrase once; the animated word spans are aria-hidden */}
+      <span className="sr-only">{text}</span>
       {words.map((word, i) => (
         <span key={`${word}-${i}`} aria-hidden className="inline">
           <motion.span

@@ -3,6 +3,6 @@
 // (or trigger an on-demand revalidation).
 
 export const features = {
-  /** 'Let Me Go' single — goes live 31 July 2026. */
+  /** 'Let Me Go' single — goes live 21 August 2026. */
   letMeGoLive: process.env.NEXT_PUBLIC_LET_ME_GO_LIVE === "true",
 } as const;

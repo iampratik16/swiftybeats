@@ -27,7 +27,7 @@ export const timeline = z.array(TimelineEvent).parse([
     marker: "DHOL",
     label: "Dhol",
     title: "It starts on the dhol",
-    body: "Rhythm before melody, discipline before everything else. Loud, heavy, built for the crowd. The instrument that shapes everything he makes.",
+    body: "Rhythm before melody, discipline before everything else. Loud, heavy, built for the crowd — the instrument that started it all.",
     image: "/assets/generated/era-dhol.avif",
   },
   {
@@ -35,7 +35,7 @@ export const timeline = z.array(TimelineEvent).parse([
     marker: "15",
     label: "P.D.S",
     title: "Pure Divine Sounds",
-    body: "At fifteen he co-founds P.D.S, turning a bedroom obsession into a collective and a name that travels.",
+    body: "At fifteen he co-founded P.D.S, turning a bedroom obsession into a collective and a name that travels.",
     image: "/assets/generated/era-volume1.avif",
   },
   {
@@ -43,7 +43,7 @@ export const timeline = z.array(TimelineEvent).parse([
     marker: "LIVE",
     label: "Festivals",
     title: "Wireless. Glastonbury.",
-    body: "Before turning twenty he plays landmark UK stages, carrying South Asian percussion into main-stage electronic sets.",
+    body: "Before turning twenty he played landmark UK stages, carrying South Asian percussion into main-stage electronic sets.",
     image: "/assets/generated/era-festival.avif",
   },
   {
@@ -51,7 +51,7 @@ export const timeline = z.array(TimelineEvent).parse([
     marker: "BBC",
     label: "Broadcast",
     title: "On the radio",
-    body: "Original tracks and edits reach BBC Radio, moving the sound from the club to the airwaves.",
+    body: "Original tracks and edits reached BBC Radio, moving the sound from the club to the airwaves.",
     image: "/assets/generated/era-broadcast.avif",
   },
   {
@@ -59,7 +59,7 @@ export const timeline = z.array(TimelineEvent).parse([
     marker: "5M+",
     label: "Streams",
     title: "Five million and counting",
-    body: "A catalogue of remixes, bootlegs and originals passes five million streams, built without a label pushing it.",
+    body: "A catalogue of remixes, bootlegs and originals passed five million streams, built without a label pushing it.",
     image: "/assets/generated/era-streams.avif",
   },
   {
@@ -67,7 +67,7 @@ export const timeline = z.array(TimelineEvent).parse([
     marker: "Now",
     label: "Latest",
     title: "Asian House Volume 1",
-    body: "The next chapter: an EP built the same way it started, dhol and South Asian rhythm at the centre, house production doing the rest. Lead single 'Let Me Go' out 31 July.",
+    body: "The next chapter: a debut EP built on the same foundation — South Asian rhythm at the centre, house production doing the rest. Lead single 'Let Me Go' out 21 August.",
     image: "/assets/generated/era-studio.avif",
   },
 ]);
@@ -154,6 +154,16 @@ export const featuredRelease = {
   eyebrow: "Latest release",
   title: "Freedom",
   body: "Out now on Spotify. Full-track listening, straight from the source. Press play and let it run.",
+} as const;
+
+/** Upcoming single — shown as a "coming soon" teaser on Music + EPK until the
+ *  NEXT_PUBLIC_LET_ME_GO_LIVE flag flips on release day. */
+export const nextRelease = {
+  eyebrow: "Next release",
+  title: "Let Me Go",
+  cover: "/assets/releases/let-me-go.jpg",
+  date: "21 August 2026",
+  body: "The lead single from the debut EP, Asian House Volume 1 — dhol and South Asian rhythm, pushed further than ever.",
 } as const;
 
 /* -------------------------------- Shows --------------------------------- */

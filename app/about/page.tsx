@@ -90,7 +90,7 @@ export default function AboutPage() {
               That heritage is the foundation for what comes next. Asian House
               Volume 1, the debut EP, keeps dhol and South Asian rhythm at the
               centre while pushing the production further than ever. Lead single
-              &apos;Let Me Go&apos; lands 31 July.
+              &apos;Let Me Go&apos; lands 21 August.
             </p>
           </Reveal>
         </div>

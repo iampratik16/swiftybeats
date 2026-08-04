@@ -4,6 +4,7 @@ import { SpotifyEmbed } from "@/components/media/SpotifyEmbed";
 import { SplitText } from "@/components/ui/SplitText";
 import { Waveband } from "@/components/ui/Waveband";
 import { BorderGlow } from "@/components/ui/BorderGlow";
+import { NextRelease } from "@/components/home/NextRelease";
 import { socialIcons } from "@/components/brand/SocialIcons";
 import { management } from "@/lib/links";
 import { artistBio, epkReleases, pressPhotos, type EpkRelease } from "@/lib/epk";
@@ -60,6 +61,8 @@ export default function EpkPage() {
       {/* Per-release EPKs */}
       <Section title="Releases">
         <div className="flex flex-col gap-12">
+          {/* Upcoming single first (auto-hides on release day), then current EPKs */}
+          <NextRelease />
           {epkReleases.map((release) => (
             <ReleaseEPK key={release.id} release={release} />
           ))}
@@ -148,7 +151,6 @@ function ReleaseEPK({ release }: { release: EpkRelease }) {
 
           <div className="flex flex-wrap gap-3">
             <AssetButton label="Download assets" url={release.downloadUrl} subject={`Download: ${release.title}`} />
-            <AssetButton label="Additional assets" url={release.assetsUrl} subject={`Assets: ${release.title}`} variant="glass" />
           </div>
         </div>
       </div>

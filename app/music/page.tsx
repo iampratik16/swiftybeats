@@ -10,6 +10,7 @@ import { Reveal } from "@/components/ui/Reveal";
 import { Tabs } from "@/components/ui/Tabs";
 import { BorderGlow } from "@/components/ui/BorderGlow";
 import { Waveband } from "@/components/ui/Waveband";
+import { NextRelease } from "@/components/home/NextRelease";
 
 export const metadata: Metadata = {
   title: "Music",
@@ -31,9 +32,14 @@ export default function MusicPage() {
         </h1>
         <p className="mt-6 text-lg text-muted">
           Full-length streaming on Spotify, remixes and bootlegs on SoundCloud,
-          videos on YouTube, all under {HANDLE}.
+          videos on YouTube — all under {HANDLE}.
         </p>
       </header>
+
+      {/* Upcoming single — coming-soon teaser (auto-hides on release day) */}
+      <div className="mt-12 md:mt-16">
+        <NextRelease />
+      </div>
 
       {/* Releases / Bootlegs tabs */}
       <section className="mt-16">

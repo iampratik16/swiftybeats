@@ -28,25 +28,26 @@ export function Hero({ hasVideo = false }: { hasVideo?: boolean }) {
     >
       <div className="absolute inset-0 -z-10">
         {hasVideo && (
-          // Full-screen: the clip covers the entire hero, edge to edge.
+          // Full-screen: the clip covers the entire hero, edge to edge. Desktop
+          // gets the 16:9 landscape crop; phones get the uncropped portrait cut.
           <SmartVideo
             priority
             fit="cover"
             muted={muted}
             sources={[
-              // Versioned filenames: new content/encode -> new URL, so the
-              // immutable /assets cache never serves a stale hero. v12 = the
-              // high-quality 720p desktop cut, WITH audio (unmute plays it).
-              { src: "/assets/hero/hero-loop-v12.webm", type: "video/webm" },
-              { src: "/assets/hero/hero-loop-v12.mp4", type: "video/mp4" },
+              // Versioned filenames: new encode -> new URL, so the immutable
+              // /assets cache never serves a stale hero. v17 = the full 13s clip,
+              // 16:9 landscape crop of the portrait source, WITH audio.
+              { src: "/assets/hero/hero-loop-v17.webm", type: "video/webm" },
+              { src: "/assets/hero/hero-loop-v17.mp4", type: "video/mp4" },
             ]}
             mobileSources={[
-              // 480p cut for phones — a fraction of the desktop payload.
-              { src: "/assets/hero/hero-loop-v12-sm.webm", type: "video/webm" },
-              { src: "/assets/hero/hero-loop-v12-sm.mp4", type: "video/mp4" },
+              // Phones get the full uncropped portrait cut (light 640-wide).
+              { src: "/assets/hero/hero-loop-v17-sm.webm", type: "video/webm" },
+              { src: "/assets/hero/hero-loop-v17-sm.mp4", type: "video/mp4" },
             ]}
-            poster="/assets/hero/hero-poster-v9.jpg"
-            alt="Swifty Beats producing in the studio, neon-lit, hands on the keys and pads"
+            poster="/assets/hero/hero-poster-v17.jpg"
+            alt="Swifty Beats in the studio, producing a track under warm studio light"
             className="h-full w-full"
           />
         )}

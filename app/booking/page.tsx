@@ -38,7 +38,7 @@ export default function BookingPage() {
       <PageIntro
         eyebrow="Booking"
         title="Book Swifty."
-        description="Clubs, festivals, private, corporate, wedding and brand collaborations. The full enquiry form, with dates, budget and event detail, is coming soon. Until then, email direct and we'll reply fast."
+        description="Festivals, brand partnerships and international dates, with select private and corporate bookings by enquiry. Full booking form launching soon — for now, get in touch directly to discuss availability."
       >
         <div className="flex flex-col gap-8">
           <div className="flex flex-wrap items-center gap-4">

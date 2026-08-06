@@ -5,14 +5,14 @@ import { management } from "@/lib/links";
 export const metadata: Metadata = {
   title: "PR",
   description:
-    "The Swifty Beats press kit and EPK are coming soon. For interviews, assets and PR enquiries, contact Supreme Music Group.",
+    "The Swifty Beats PR kit and EPK are coming soon. For interviews, assets and PR enquiries, contact Supreme Music Group.",
 };
 
 export default function PressPage() {
   return (
     <ComingSoon
       eyebrow="PR"
-      description="The full press kit and EPK are on the way. For interviews, hi-res assets and PR enquiries, reach management directly."
+      description="The full PR kit and EPK are on the way. For interviews, hi-res assets and PR enquiries, reach management directly."
       primary={{
         label: "PR enquiries",
         href: `mailto:${management.email}`,

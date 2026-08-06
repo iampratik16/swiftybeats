@@ -17,8 +17,11 @@ const nextConfig: NextConfig = {
     ],
   },
   async redirects() {
-    // "Tour" is now "Shows" — keep old links and bookmarks working
-    return [{ source: "/tour", destination: "/shows", permanent: true }];
+    // Keep old links and bookmarks working after renames
+    return [
+      { source: "/tour", destination: "/shows", permanent: true },
+      { source: "/press", destination: "/pr", permanent: true },
+    ];
   },
   async headers() {
     return [

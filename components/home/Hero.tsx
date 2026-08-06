@@ -1,11 +1,10 @@
 "use client";
 
-import Image from "next/image";
 import { useState } from "react";
 import { motion } from "framer-motion";
 import { SmartVideo } from "@/components/media/SmartVideo";
 import { MagneticButton } from "@/components/ui/MagneticButton";
-import { SplitText } from "@/components/ui/SplitText";
+import { Logo } from "@/components/brand/Logo";
 import { TrackSpec } from "@/components/ui/TrackSpec";
 import { socials } from "@/lib/links";
 
@@ -66,18 +65,13 @@ export function Hero({ hasVideo = false }: { hasVideo?: boolean }) {
           <TrackSpec className="[text-shadow:0_1px_20px_rgba(0,0,0,0.7)]" />
         </motion.div>
 
-        <h1 className="mt-6 font-display text-[clamp(2.75rem,9.5vw,7.5rem)] font-semibold leading-[0.9] tracking-[-0.04em] [text-shadow:0_2px_50px_rgba(0,0,0,0.6)]">
-          <SplitText text="Swifty" delay={0.2} immediate />{" "}
-          <SplitText text="Beats" delay={0.34} immediate className="accent font-normal text-jewel" />
-          {/* Small logo mark, inline after the word */}
-          <Image
-            src="/assets/brand/logo.png"
-            alt=""
-            width={462}
-            height={234}
+        {/* Brand logo IS the hero heading (image carries the "Swifty Beats" name) */}
+        <h1 className="mt-6">
+          <Logo
             priority
-            aria-hidden
-            className="ml-4 inline-block h-[0.34em] w-auto align-[0.14em] [filter:drop-shadow(0_2px_20px_rgba(0,0,0,0.6))]"
+            // Tight dark halo (0-offset) outlines the thin BEATS letters so they
+            // stay legible over bright video; the soft one adds depth.
+            className="h-[clamp(4.25rem,13vw,8.5rem)] w-auto [filter:drop-shadow(0_0_5px_rgba(0,0,0,0.9))_drop-shadow(0_3px_22px_rgba(0,0,0,0.75))]"
           />
         </h1>
 
